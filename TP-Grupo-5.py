@@ -37,7 +37,7 @@ def registrarCliente(clientes):
     clientes[nuevo_id] = {
         "nombre": nombre,
         "domicilio": domicilio,
-        "telefono": telefono,
+        "telefonos": telefono,
         "activo": True
     }
     #Mensaje de confirmacion al usuario
@@ -50,11 +50,36 @@ def modificarCliente(clientes):
     return clientes
 
 def eliminarCliente(clientes):
-    ...
+    print("=== Eliminar cliente ===")
+
+    if len(clientes) == 0:
+        print("No hay clientes registrados.")
+        return clientes
+    
+    listarClientes(clientes)
+
+    id_cliente = int(input("Ingrese el ID del cliente a eliminar: "))
+
+    if id_cliente not in clientes:
+        print("ID de cliente no encontrado.")
+        return clientes
+    
+    clientes[id_cliente]["activo"] = False
+    print("Cliente eliminado con éxito.")
     return clientes
 
 def listarClientes(clientes):
-    ...
+    print("=== Lista de Clientes ===")
+
+    if len(clientes) == 0:
+        print("No hay clientes registrados.")
+        return
+    
+    print(f"{'ID':<5} {'Nombre':<30} {'Domicilio':<30} {'Telefono':<15} {'Activo':<10}")
+    print('*' * 100)
+    for id_cliente, datos in clientes.items():
+        estado = "Si" if datos["activo"] else "No"
+        print(f"{id_cliente:<5} {datos['nombre']:<30} {datos['domicilio']:<30} {datos['telefonos']['telefono1']:<15} {estado}")
     return
 
 #----------------------------------------------------------------------------------------------
