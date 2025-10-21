@@ -28,6 +28,7 @@ def registrarCliente(clientes):
         nuevo_id = 1
     else:
         nuevo_id = max(clientes.keys()) + 1
+        
     #Solicitar datos del cliente
     nombre = input("Ingrese el nombre del cliente: ").strip()
     domicilio = input("Ingrese el domicilio del cliente: ").strip()
@@ -76,7 +77,7 @@ def listarClientes(clientes):
         return
     
     print(f"{'ID':<5} {'Nombre':<30} {'Domicilio':<30} {'Telefono':<15} {'Activo':<10}")
-    print('*' * 100)
+    print('*' * 1010)
     for id_cliente, datos in clientes.items():
         estado = "Si" if datos["activo"] else "No"
         print(f"{id_cliente:<5} {datos['nombre']:<30} {datos['domicilio']:<30} {datos['telefonos']['telefono1']:<15} {estado}")
