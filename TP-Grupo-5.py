@@ -25,10 +25,10 @@ def registrarCliente(clientes):
     print("=== Registrar nuevo cliente ===")
     # Lógica para registrar un nuevo id de cliente
     if len(clientes) == 0:
-        nuevo_id = 1
+        nuevo_id = "1"
     else:
-        nuevo_id = max(clientes.keys()) + 1
-        
+        nuevo_id = str(int(max(clientes.keys())) + 1)
+
     #Solicitar datos del cliente
     nombre = input("Ingrese el nombre del cliente: ").strip()
     domicilio = input("Ingrese el domicilio del cliente: ").strip()
