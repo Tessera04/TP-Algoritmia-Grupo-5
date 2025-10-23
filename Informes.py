@@ -32,11 +32,15 @@ def informeVentasPorProductoCantidades(alquileres):
     return
 
 def informeVentasPorProductoPrecios(alquileres, herramientas):
+    print("---------------------------")
+    print("=== PRECIOS TOTALES POR MES (PESOS) ===")
+    print("---------------------------")
+    print("Rango maximo: 10 meses.")
 
     # Solicitar rango de fechas al usuario
-    anio_inicio = int(input("Ingrese el año de inicio (por ejemplo 2024): "))
+    anio_inicio = int(input("Ingrese el año de inicio (por ejemplo 2025): "))
     mes_inicio = int(input("Ingrese el mes de inicio (1-12): "))
-    anio_fin = int(input("Ingrese el año de fin (por ejemplo 2024): "))
+    anio_fin = int(input("Ingrese el año de fin (por ejemplo 2025): "))
     mes_fin = int(input("Ingrese el mes de fin (1-12): "))
 
     fecha_inicio = datetime(anio_inicio, mes_inicio, 1)
