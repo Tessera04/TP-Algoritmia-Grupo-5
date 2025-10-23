@@ -185,58 +185,150 @@ def main():
     }
 
     herramientas = {
-    "1": {"activa": True,
-          "nombre": "Taladro percutor Bosch GSB 13 RE",
-          "costo_diario": 4500.0,
-          "stock": 5},
-          
-    "2": {"activa": True,
-          "nombre": "Amoladora angular DeWalt DWE4010",
-          "costo_diario": 4200.0,
-          "stock": 3},
+        "1":{"activa"      :True,
+              "nombre"      :"Taladro Bosch",
+              "costo_diario":4500.0,
+              "stock"       :5
+            },
+            
+        "2": {"activa": True,
+            "nombre": "Amoladora angular DeWalt",
+            "costo_diario": 4200.0,
+            "stock": 3},
 
-    "3": {"activa": True,
-          "nombre": "Sierra circular Makita 5007N",
-          "costo_diario": 5200.0,
-          "stock": 4},
+        "3": {"activa": True,
+            "nombre": "Sierra circular Makita",
+            "costo_diario": 5200.0,
+            "stock": 4},
 
-    "4": {"activa": True,
-          "nombre": "Lijadora orbital Black+Decker KA300",
-          "costo_diario": 3100.0,
-          "stock": 6},
+        "4": {"activa": True,
+            "nombre": "Lijadora Black+Decker",
+            "costo_diario": 3100.0,
+            "stock": 6},
 
-    "5": {"activa": True,
-          "nombre": "Cortadora de césped eléctrica Gamma G2832AR",
-          "costo_diario": 5700.0,
-          "stock": 2},
+        "5": {"activa": True,
+            "nombre": "Cortadora de césped eléctrica Gamma",
+            "costo_diario": 5700.0,
+            "stock": 2},
 
-    "6": {"activa": True,
-          "nombre": "Martillo demoledor Stanley STHM5KH",
-          "costo_diario": 6300.0,
-          "stock": 3},
+        "6": {"activa": True,
+            "nombre": "Martillo demoledor Stanley",
+            "costo_diario": 6300.0,
+            "stock": 3},
 
-    "7": {"activa": True,
-          "nombre": "Soldadora inverter Lusqtoff Iron 250",
-          "costo_diario": 6900.0,
-          "stock": 2},
+        "7": {"activa": True,
+            "nombre": "Soldadora inverter Lusqtoff",
+            "costo_diario": 6900.0,
+            "stock": 2},
 
-    "8": {"activa": True,
-          "nombre": "Compresor de aire 50L Einhell TE-AC 270/50/10",
-          "costo_diario": 7500.0,
-          "stock": 1},
+        "8": {"activa": True,
+            "nombre": "Compresor de aire",
+            "costo_diario": 7500.0,
+            "stock": 1},
 
-    "9": {"activa": True,
-          "nombre": "Pistola de calor Skil 8003 AA",
-          "costo_diario": 2800.0,
-          "stock": 5},
+        "9": {"activa": True,
+            "nombre": "Pistola de calor Skil",
+            "costo_diario": 2800.0,
+            "stock": 5},
 
-    "10": {"activa": True,
-           "nombre": "Atornillador inalámbrico Bosch IXO V",
-           "costo_diario": 3600.0,
-           "stock": 4},
-}
- 
+        "10": {"activa": True,
+            "nombre": "Atornillador inalámbrico Bosch",
+            "costo_diario": 3600.0,
+            "stock": 4},
+    }
 
+    alquileres = {
+        "1": {
+            "id_herramienta": "3",  # Sierra circular Makita 5007N
+            "id_cliente": "38992233",  # TOMÁS EZEQUIEL GARCÍA
+            "fecha_inicio": "2025-10-02",
+            "fecha_fin": "2025-10-05",
+            "dias_alquiler": 3,
+            "total": 5200.0 * 3,  # 15600.0
+            "activo": True
+        },
+        "2": {
+            "id_herramienta": "6",  # Martillo demoledor Stanley STHM5KH
+            "id_cliente": "30566123",  # ANDREA BEATRIZ LÓPEZ
+            "fecha_inicio": "2025-10-04",
+            "fecha_fin": "2025-10-08",
+            "dias_alquiler": 4,
+            "total": 6300.0 * 4,  # 25200.0
+            "activo": True
+        },
+        "3": {
+            "id_herramienta": "1",  # Taladro percutor Bosch GSB 13 RE
+            "id_cliente": "41765012",  # SOFÍA ALEJANDRA MONTIEL
+            "fecha_inicio": "2025-10-05",
+            "fecha_fin": "2025-10-09",
+            "dias_alquiler": 4,
+            "total": 4500.0 * 4,  # 18000.0
+            "activo": True
+        },
+        "4": {
+            "id_herramienta": "10",  # Atornillador inalámbrico Bosch IXO V
+            "id_cliente": "29644109",  # CARLA ANDREA VILLALBA
+            "fecha_inicio": "2025-10-07",
+            "fecha_fin": "2025-10-10",
+            "dias_alquiler": 3,
+            "total": 3600.0 * 3,  # 10800.0
+            "activo": True
+        },
+        "5": {
+            "id_herramienta": "4",  # Lijadora orbital Black+Decker KA300
+            "id_cliente": "27784566",  # MARÍA LUJÁN PAREDES
+            "fecha_inicio": "2025-10-09",
+            "fecha_fin": "2025-10-11",
+            "dias_alquiler": 2,
+            "total": 3100.0 * 2,  # 6200.0
+            "activo": True
+        },
+        "6": {
+            "id_herramienta": "7",  # Soldadora inverter Lusqtoff Iron 250
+            "id_cliente": "27811984",  # MARTÍN ESTEBAN FERRARI
+            "fecha_inicio": "2025-10-10",
+            "fecha_fin": "2025-10-15",
+            "dias_alquiler": 5,
+            "total": 6900.0 * 5,  # 34500.0
+            "activo": True
+        },
+        "7": {
+            "id_herramienta": "9",  # Pistola de calor Skil 8003 AA
+            "id_cliente": "42331005",  # ROCÍO BELÉN SALGADO
+            "fecha_inicio": "2025-10-12",
+            "fecha_fin": "2025-10-14",
+            "dias_alquiler": 2,
+            "total": 2800.0 * 2,  # 5600.0
+            "activo": True
+        },
+        "8": {
+            "id_herramienta": "2",  # Amoladora angular DeWalt DWE4010
+            "id_cliente": "41022987",  # ANA CELESTE CÁCERES
+            "fecha_inicio": "2025-10-13",
+            "fecha_fin": "2025-10-17",
+            "dias_alquiler": 4,
+            "total": 4200.0 * 4,  # 16800.0
+            "activo": True
+        },
+        "9": {
+            "id_herramienta": "8",  # Compresor de aire 50L Einhell TE-AC 270/50/10
+            "id_cliente": "38900011",  # LUCÍA VANESA TORRES
+            "fecha_inicio": "2025-10-16",
+            "fecha_fin": "2025-10-20",
+            "dias_alquiler": 4,
+            "total": 7500.0 * 4,  # 30000.0
+            "activo": True
+        },
+        "10": {
+            "id_herramienta": "5",  # Cortadora de césped Gamma G2832AR
+            "id_cliente": "34591277",  # JORGE LUIS RIVERO
+            "fecha_inicio": "2025-10-18",
+            "fecha_fin": "2025-10-21",
+            "dias_alquiler": 3,
+            "total": 5700.0 * 3,  # 17100.0
+            "activo": True
+        }
+    }
 
     #-------------------------------------------------
     # Bloque de menú
@@ -339,7 +431,7 @@ def main():
                     break # No sale del programa, sino que vuelve al menú anterior
                 
                 elif opcionSubmenu == "1":   # Opción 1 del submenú alquileres
-                    alquileres = registrarAlquiler(alquileres)
+                    alquileres = registrarAlquiler(alquileres, clientes, herramientas)
                     
                 elif opcionSubmenu == "2":   # Opción 2 del submenú alquileres
                     alquileres = modificarAlquiler(alquileres)
@@ -348,7 +440,7 @@ def main():
                     alquileres = eliminarAlquiler(alquileres)
 
                 elif opcionSubmenu == "4":   # Opción 4 del submenú alquileres
-                    alquileres = listarAlquileres(alquileres)
+                    alquileres = listarAlquileres(alquileres, clientes, herramientas)
 
                 input("\nPresione ENTER para volver al menú.") # Pausa entre opciones
                 print("\n\n")
