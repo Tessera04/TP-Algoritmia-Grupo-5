@@ -57,7 +57,30 @@ def registrarCliente(clientes):
     return clientes
 
 def modificarCliente(clientes):
-    ...
+    print("=== Modificar cliente ===")
+
+    if len(clientes) == 0:
+        print("No hay clientes registrados.")
+        return clientes
+
+    listarClientes(clientes)
+
+    id_cliente = input("Ingrese el ID del cliente a modificar: ").strip()
+
+    if id_cliente not in clientes:
+        print("ID de cliente no encontrado.")
+        return clientes
+
+    print("Deje en blanco para mantener el valor actual.")
+    nuevo_nombre = input(f"Nuevo nombre ({clientes[id_cliente]['nombre']}): ").strip()
+    nuevo_domicilio = input(f"Nuevo domicilio ({clientes[id_cliente]['domicilio']}): ").strip()
+
+    if nuevo_nombre != "":
+        clientes[id_cliente]['nombre'] = nuevo_nombre
+    if nuevo_domicilio != "":
+        clientes[id_cliente]['domicilio'] = nuevo_domicilio
+
+    print("Cliente modificado con éxito.")
     return clientes
 
 def eliminarCliente(clientes):
