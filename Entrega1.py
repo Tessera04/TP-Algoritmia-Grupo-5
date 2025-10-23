@@ -184,6 +184,59 @@ def main():
                    },
     }
 
+    herramientas = {
+    "1": {"activa": True,
+          "nombre": "Taladro percutor Bosch GSB 13 RE",
+          "costo_diario": 4500.0,
+          "stock": 5},
+          
+    "2": {"activa": True,
+          "nombre": "Amoladora angular DeWalt DWE4010",
+          "costo_diario": 4200.0,
+          "stock": 3},
+
+    "3": {"activa": True,
+          "nombre": "Sierra circular Makita 5007N",
+          "costo_diario": 5200.0,
+          "stock": 4},
+
+    "4": {"activa": True,
+          "nombre": "Lijadora orbital Black+Decker KA300",
+          "costo_diario": 3100.0,
+          "stock": 6},
+
+    "5": {"activa": True,
+          "nombre": "Cortadora de césped eléctrica Gamma G2832AR",
+          "costo_diario": 5700.0,
+          "stock": 2},
+
+    "6": {"activa": True,
+          "nombre": "Martillo demoledor Stanley STHM5KH",
+          "costo_diario": 6300.0,
+          "stock": 3},
+
+    "7": {"activa": True,
+          "nombre": "Soldadora inverter Lusqtoff Iron 250",
+          "costo_diario": 6900.0,
+          "stock": 2},
+
+    "8": {"activa": True,
+          "nombre": "Compresor de aire 50L Einhell TE-AC 270/50/10",
+          "costo_diario": 7500.0,
+          "stock": 1},
+
+    "9": {"activa": True,
+          "nombre": "Pistola de calor Skil 8003 AA",
+          "costo_diario": 2800.0,
+          "stock": 5},
+
+    "10": {"activa": True,
+           "nombre": "Atornillador inalámbrico Bosch IXO V",
+           "costo_diario": 3600.0,
+           "stock": 4},
+}
+ 
+
 
     #-------------------------------------------------
     # Bloque de menú
