@@ -185,16 +185,17 @@ def main():
     }
 
     herramientas = {
-        "1":{"activa"      :True,
+        "1":{"activa"       :True,
               "nombre"      :"Taladro Bosch",
               "costo_diario":4500.0,
               "stock"       :5
             },
             
-        "2": {"activa": True,
-            "nombre": "Amoladora angular DeWalt",
-            "costo_diario": 4200.0,
-            "stock": 3},
+        "2": {"activa"      :True,
+              "nombre"      :"Amoladora angular DeWalt",
+              "costo_diario":4200.0,
+              "stock"       :3
+            },
 
         "3": {"activa": True,
             "nombre": "Sierra circular Makita",
@@ -523,7 +524,7 @@ def main():
                     informes = informeVentasPorProductoCantidades(alquileres)
 
                 elif opcionSubmenu == "3":   # Opción 3 del submenú  informes
-                    informes = informeVentasPorProductoPrecios(alquileres)
+                    informes = informeVentasPorProductoPrecios(alquileres, herramientas)
 
                 elif opcionSubmenu == "4":   # Opción 4 del submenú informes
                     informes = informeHerramientasInactivas(herramientas, alquileres)
