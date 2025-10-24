@@ -245,8 +245,64 @@ def informeVentasPorProductoPrecios(alquileres, herramientas):
     return
 
 def informeHerramientasInactivas(herramientas, alquileres):
-    print(f"{'ID':<5} {'Herramienta ':<50} {'Estado':<10}")
-    print('*' * 200)
+    print("---------------------------")
+    print("=== INFORME DE HERRAMIENTAS MENOS UTILIZADAS (MES ACTUAL) ===")
+    print("---------------------------")
+
+    hoy = datetime.now()
+    mes_actual = hoy.month
+    anio_actual = hoy.year
+
+    # Crear resumen base
+    resumen = {}
+    for idHerramientas, datos_h in herramientas.items():
+        resumen[idHerramientas] = {
+            "nombre": datos_h["nombre"],
+            "cantidad": 0,
+            "total": 0.0
+        }
+
+    # Contar alquileres del mes actual
+    for datos in alquileres.values():
+        fecha = datetime.strptime(datos["fecha_inicio"], "%Y-%m-%d")
+        if fecha.year == anio_actual and fecha.month == mes_actual:
+            idHerramientas = datos["id_herramienta"]
+            resumen[idHerramientas]["cantidad"] = resumen[idHerramientas]["cantidad"] + 1
+            resumen[idHerramientas]["total"] = resumen[idHerramientas]["total"] + datos["total"]
+
+    # Convertir a lista para ordenar manualmente
+    lista_resumen = []
+    for idHerramientas in resumen:
+        item = {
+            "id": idHerramientas,
+            "nombre": resumen[idHerramientas]["nombre"],
+            "cantidad": resumen[idHerramientas]["cantidad"],
+            "total": resumen[idHerramientas]["total"]
+        }
+        lista_resumen.append(item)
+
+    # Ordenamiento manual (por cantidad y luego total)
+    for i in range(len(lista_resumen) - 1):
+        for j in range(i + 1, len(lista_resumen)):
+            if (lista_resumen[i]["cantidad"] > lista_resumen[j]["cantidad"]) or \
+               (lista_resumen[i]["cantidad"] == lista_resumen[j]["cantidad"] and lista_resumen[i]["total"] > lista_resumen[j]["total"]):
+                aux = lista_resumen[i]
+                lista_resumen[i] = lista_resumen[j]
+                lista_resumen[j] = aux
+
+    # Mostrar resultados
+    print(f"{'ID':<5} {'Herramienta':<50} {'Cant.Alq':<12} {'Monto ($)':<12} {'Estado':<10}")
+    print("-" * 120)
+
+    for item in lista_resumen:
+        estado = "Inactiva"
+        if item["cantidad"] > 0:
+            estado = "Activa"
+        print(f"{item['id']:<5} {item['nombre']:<50} {item['cantidad']:<12} {item['total']:<12.2f} {estado:<10}")
+
+    print("-" * 120)
+    print("Las herramientas inactivas son aquellas sin registros en el mes actual.")
+    print("-" * 120)
     return
 
 #----------------------------------------------------------------------------------------------
