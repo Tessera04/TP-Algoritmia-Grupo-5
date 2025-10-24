@@ -92,7 +92,7 @@ def eliminarCliente(clientes):
     
     listarClientes(clientes)
 
-    id_cliente = int(input("Ingrese el ID del cliente a eliminar: "))
+    id_cliente = str(int(input("Ingrese el ID del cliente a eliminar: ")))
 
     if id_cliente not in clientes:
         print("ID de cliente no encontrado.")
@@ -114,7 +114,7 @@ def listarClientes(clientes):
     for id_cliente, datos in clientes.items():
         estado = "Si" if datos["activo"] else "No"
         print(f"{id_cliente:<5} {datos['nombre']:<30} {datos['domicilio']:<30} {datos['telefonos']['telefono1']:<15} {estado}")
-    return
+    return clientes
 
 #----------------------------------------------------------------------------------------------
 # CUERPO PRINCIPAL
