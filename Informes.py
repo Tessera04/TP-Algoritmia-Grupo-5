@@ -18,17 +18,145 @@ from datetime import datetime
 # FUNCIONES Informes
 #----------------------------------------------------------------------------------------------
 
-def informeVentasYRecaudacionMensual(alquileres):
-    print(f"{'Fecha/Hora':<30} {'Cliente':<50} {'Producto':<50} {'Cant.':<15} {'Unit.':<15} {'Total':<15}")
-    print('-' * 200)
+def informeVentasYRecaudacionMensual(alquileres, clientes, herramientas):
+    print("---------------------------")
+    print("=== INFORME DE VENTAS Y RECAUDACION MENSUAL ===")
+    print("---------------------------")
+
+    # Obtener mes y año actual del sistema
+    fecha_actual = datetime.now()
+    mes_actual = fecha_actual.month
+    anio_actual = fecha_actual.year
+
+    print(f"OPERACIONES DEL MES {mes_actual}/{anio_actual}")
+    print('-' * 150)
+    print(f"{'Fecha/Hora':<20} {'Cliente':<40} {'Producto':<40} {'Cant.':<15} {'Unit.':<15} {'Total':<15}")
+    print('-' * 150)
+
+    total_mes = 0
+    hay_datos = False
+
+    for alquiler in alquileres:
+        datos = alquileres[alquiler]
+        fecha = datetime.strptime(datos["fecha_inicio"], "%Y-%m-%d")
+
+        if fecha.year == anio_actual and fecha.month == mes_actual:
+            hay_datos = True
+
+            idCliente = datos["id_cliente"]
+            idHerramienta = datos["id_herramienta"]
+
+            if idCliente in clientes:
+                nombre_cliente = clientes[idCliente]["nombre"]
+            else:
+                nombre_cliente = "Cliente Desconocido"
+
+            if idHerramienta in herramientas:
+                nombre_herramienta = herramientas[idHerramienta]["nombre"]
+                precio_unitario = herramientas[idHerramienta]["costo_diario"]
+            else:
+                nombre_herramienta = "Herramienta Desconocida"
+                precio_unitario = 0
+            
+            dias = datos["dias_alquiler"]
+            total = datos["total"]
+            total_mes += total
+
+            print(f"{datos['fecha_inicio']:<20} {nombre_cliente:<40} {nombre_herramienta:<40} {dias:<15} {precio_unitario:<15.2f} {total:<15.2f}")
+            
+    if not hay_datos:
+        print("No se registraron operaciones en este mes.")
+    else:
+        print('-' * 150)
+        print(f"{'TOTAL RECAUDADO EN EL MES:':<130} {total_mes:<15.2f}")
+        print('-' * 150)
     return
 
-def informeVentasPorProductoCantidades(alquileres):
+def informeVentasPorProductoCantidades(alquileres, herramientas):
     print("---------------------------")
-    print("=== CANTIDADES TOTALES POR MES (UNIDADES ALQUILADAS) ===")
+    print("=== CANTIDADES TOTALES POR MES ===")
     print("---------------------------")
-    print(f"{'Producto':<5} {'ENERO-24 ':<50} {'FEBRERO-25':<10}")
-    print('-' * 200)
+    print("Rango máximo: 10 meses.")
+
+    # Solicitar rango de fechas al usuario
+    anio_inicio = int(input("Ingrese el año de inicio (por ejemplo 2025): "))
+    mes_inicio = int(input("Ingrese el mes de inicio (1-12): "))
+    anio_fin = int(input("Ingrese el año de fin (por ejemplo 2025): "))
+    mes_fin = int(input("Ingrese el mes de fin (1-12): "))
+
+    fecha_inicio = datetime(anio_inicio, mes_inicio, 1)
+    fecha_fin = datetime(anio_fin, mes_fin, 28)
+
+    if fecha_fin < fecha_inicio:
+        print("Error: la fecha final debe ser posterior a la fecha inicial.")
+        return
+
+    # Calcular cantidad de meses en el rango
+    meses_diferencia = (anio_fin - anio_inicio) * 12 + (mes_fin - mes_inicio + 1)
+    if meses_diferencia > 10:
+        print("Error: el rango no puede superar los 10 meses.")
+        return
+
+    meses_abrev = ["ENE", "FEB", "MAR", "ABR", "MAY", "JUN",
+                   "JUL", "AGO", "SEP", "OCT", "NOV", "DIC"]
+
+    # Generar lista de meses a mostrar
+    meses_mostrar = []
+    fecha_actual = fecha_inicio
+    while fecha_actual <= fecha_fin:
+        etiqueta = f"{meses_abrev[fecha_actual.month - 1]}.{str(fecha_actual.year)[2:]}"
+        meses_mostrar.append(etiqueta)
+        nuevo_mes = fecha_actual.month + 1
+        nuevo_anio = fecha_actual.year
+        if nuevo_mes > 12:
+            nuevo_mes = 1
+            nuevo_anio += 1
+        fecha_actual = datetime(nuevo_anio, nuevo_mes, 1)
+
+    # Crear estructura base
+    resumen = {}
+    for id_h, datos_h in herramientas.items():
+        resumen[datos_h["nombre"]] = {}
+        for mes in meses_mostrar:
+            resumen[datos_h["nombre"]][mes] = 0
+
+    # Recorrer alquileres dentro del rango
+    for id_a in alquileres:
+        datos = alquileres[id_a]
+        id_h = datos["id_herramienta"]
+        fecha_str = datos["fecha_inicio"]
+        dias = datos["dias_alquiler"]
+
+        fecha = datetime.strptime(fecha_str, "%Y-%m-%d")
+        if fecha < fecha_inicio or fecha > fecha_fin:
+            continue
+
+        etiqueta_mes = f"{meses_abrev[fecha.month - 1]}.{str(fecha.year)[2:]}"
+        nombre_h = herramientas[id_h]["nombre"]
+
+        if etiqueta_mes in resumen[nombre_h]:
+            resumen[nombre_h][etiqueta_mes] += dias
+
+    # Mostrar tabla
+    print("-" * 150)
+    print("CANTIDADES TOTALES POR MES")
+    print("-" * 150)
+
+    # Encabezado
+    print(f"{'Producto':<50}", end="")
+    for mes in meses_mostrar:
+        print(f"{mes:^10}", end="")
+    print()
+    print("-" * 150)
+
+    # Filas
+    for producto in resumen:
+        print(f"{producto:<50}", end="")
+        for mes in meses_mostrar:
+            print(f"{resumen[producto][mes]:>10.0f}", end="")
+        print()
+    print("-" * 150)
+
     return
 
 def informeVentasPorProductoPrecios(alquileres, herramientas):

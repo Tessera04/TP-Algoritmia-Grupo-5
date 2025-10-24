@@ -518,10 +518,10 @@ def main():
                     break # No sale del programa, sino que vuelve al menú anterior
 
                 elif opcionSubmenu == "1":   # Opción 1 del submenú informes
-                    informes = informeVentasYRecaudacionMensual(alquileres)
+                    informes = informeVentasYRecaudacionMensual(alquileres,clientes,herramientas)
 
                 elif opcionSubmenu == "2":   # Opción 2 del submenú informes
-                    informes = informeVentasPorProductoCantidades(alquileres)
+                    informes = informeVentasPorProductoCantidades(alquileres, herramientas)
 
                 elif opcionSubmenu == "3":   # Opción 3 del submenú  informes
                     informes = informeVentasPorProductoPrecios(alquileres, herramientas)
