@@ -4,7 +4,8 @@ Título: Trabajo Práctico Grupo 5 - Sistema de Gestión de Alquiler de Herramie
 Fecha: 22/10/2025
 Autor: Vicente Courtinade, Marcos Gimenez, Matias Gonzalez, Lautaro Ruisoto, Santiago Salas.
 
-Descripción:
+Descripción: Módulo de Alquileres del sistema de gestión de alquiler de herramientas. 
+Proporciona funciones CRUD para registrar, modificar, eliminar y listar alquileres de herramientas.
 
 Pendientes:
 -----------------------------------------------------------------------------------------------
@@ -91,8 +92,106 @@ def registrarAlquiler(alquileres, clientes, herramientas):
 
     return alquileres
 
-def modificarAlquiler(alquileres):
-    ...
+def modificarAlquiler(alquileres, clientes, herramientas):
+    print("=== Modificar alquiler ===")
+ 
+    if len(alquileres) == 0:
+        print("No hay alquileres registrados.")
+        return alquileres
+ 
+    print(f"{'ID':<5} {'Cliente':<20} {'Herramienta':<25} {'Activo':<10}")
+    print("-" * 60)
+ 
+    for id_alquiler, datos in alquileres.items():
+        nombre_cliente = clientes.get(datos["id_cliente"], {}).get("nombre", "Desconocido")
+        nombre_herramienta = herramientas.get(datos["id_herramienta"], {}).get("nombre", "Desconocida")
+        estado = "Sí" if datos["activo"] else "No"
+        print(f"{id_alquiler:<5} {nombre_cliente:<20} {nombre_herramienta:<25} {estado:<10}")
+ 
+    print("-" * 60)
+    id_alquiler = input("Ingrese el ID del alquiler que desea modificar: ").strip()
+ 
+    if id_alquiler not in alquileres:
+        print("ID no encontrado.")
+        return alquileres
+ 
+    alquiler = alquileres[id_alquiler]
+ 
+    print("---------------------------")
+    print("Datos actuales del alquiler:")
+    print(f"Cliente: {alquiler['id_cliente']}")
+    print(f"Herramienta: {alquiler['id_herramienta']}")
+    print(f"Fecha inicio: {alquiler['fecha_inicio']}")
+    print(f"Fecha fin: {alquiler['fecha_fin']}")
+    print(f"Activo: {'Sí' if alquiler['activo'] else 'No'}")
+    print("---------------------------")
+ 
+    # --- Modificar cliente ---
+    opcion = input("¿Desea cambiar el cliente? (s/n): ").strip().lower()
+    while opcion not in ("s", "n"):
+        opcion = input("Opción inválida. Ingrese 's' o 'n': ").strip().lower()
+    if opcion == "s":
+        print("Clientes disponibles:")
+        for id_cliente, datos in clientes.items():
+            if datos["activo"]:
+                print(f"{id_cliente} - {datos['nombre']}")
+        nuevo_cliente = input("Ingrese el nuevo ID de cliente: ").strip()
+        if nuevo_cliente in clientes and clientes[nuevo_cliente]["activo"]:
+            alquiler["id_cliente"] = nuevo_cliente
+        else:
+            print("Cliente no válido, se mantiene el actual.")
+ 
+    # --- Modificar herramienta ---
+    opcion = input("¿Desea cambiar la herramienta? (s/n): ").strip().lower()
+    while opcion not in ("s", "n"):
+        opcion = input("Opción inválida. Ingrese 's' o 'n': ").strip().lower()
+    if opcion == "s":
+        print("Herramientas disponibles:")
+        for id_herramienta, datos in herramientas.items():
+            if datos["activa"]:
+                print(f"{id_herramienta} - {datos['nombre']}")
+        nueva_herramienta = input("Ingrese el nuevo ID de herramienta: ").strip()
+        if nueva_herramienta in herramientas and herramientas[nueva_herramienta]["activa"]:
+            alquiler["id_herramienta"] = nueva_herramienta
+        else:
+            print("Herramienta no válida, se mantiene la actual.")
+ 
+    # --- Modificar fechas ---
+    opcion = input("¿Desea cambiar las fechas? (s/n): ").strip().lower()
+    while opcion not in ("s", "n"):
+        opcion = input("Opción inválida. Ingrese 's' o 'n': ").strip().lower()
+    if opcion == "s":
+        fecha_inicio = input("Ingrese nueva fecha de inicio (AAAA-MM-DD): ").strip()
+        fecha_fin = input("Ingrese nueva fecha de fin (AAAA-MM-DD): ").strip()
+ 
+        f1 = datetime.strptime(fecha_inicio, "%Y-%m-%d")
+        f2 = datetime.strptime(fecha_fin, "%Y-%m-%d")
+ 
+        dias_alquiler = (f2 - f1).days
+        if dias_alquiler <= 0:
+            print("La fecha de fin debe ser posterior a la de inicio. No se modificaron las fechas.")
+        else:
+            alquiler["fecha_inicio"] = fecha_inicio
+            alquiler["fecha_fin"] = fecha_fin
+            alquiler["dias_alquiler"] = dias_alquiler
+            precio_dia = herramientas[alquiler["id_herramienta"]]["costo_diario"]
+            alquiler["total"] = precio_dia * dias_alquiler
+            print("Fechas y total actualizados correctamente.")
+ 
+    # --- Cambiar estado activo ---
+    opcion = input("¿Desea cambiar el estado del alquiler (activo/inactivo)? (s/n): ").strip().lower()
+    while opcion not in ("s", "n"):
+        opcion = input("Opción inválida. Ingrese 's' o 'n': ").strip().lower()
+    if opcion == "s":
+        nuevo_estado = input("Ingrese 's' para activo o 'n' para inactivo: ").strip().lower()
+        while nuevo_estado not in ("s", "n"):
+            nuevo_estado = input("Opción inválida. Ingrese 's' o 'n': ").strip().lower()
+        alquiler["activo"] = nuevo_estado == "s"
+ 
+    print("---------------------------")
+    print("Alquiler modificado correctamente.")
+    print("---------------------------")
+ 
     return alquileres
 
 def eliminarAlquiler(alquileres):

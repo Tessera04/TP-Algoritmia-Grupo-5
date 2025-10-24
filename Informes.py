@@ -4,7 +4,8 @@ Título: Trabajo Práctico Grupo 5 - Sistema de Gestión de Alquiler de Herramie
 Fecha: 22/10/2025
 Autor: Vicente Courtinade, Marcos Gimenez, Matias Gonzalez, Lautaro Ruisoto, Santiago Salas.
 
-Descripción:
+Descripción: Módulo de Informes del sistema de gestión de alquiler de herramientas. Proporciona funciones para generar informes detallados sobre ventas,
+recaudación mensual, cantidades y precios por producto, y herramientas menos utilizadas.
 
 Pendientes:
 -----------------------------------------------------------------------------------------------
