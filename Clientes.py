@@ -19,6 +19,15 @@ Pendientes:
 # FUNCIONES Clientes
 #----------------------------------------------------------------------------------------------
 def registrarCliente(clientes):
+    """
+    Registra un nuevo cliente solicitando datos personales y permitiendole ingresar 1 o mas telefonos.
+
+    Parametros:
+    clientes (dict)
+
+    Returns:
+    dict: El diccionario 'clientes' actualizado con la nueva entrada y sus teléfonos asociados.
+    """
     print("=== Registrar nuevo cliente ===")
     # Lógica para registrar un nuevo id de cliente
     if len(clientes) == 0:
@@ -58,6 +67,16 @@ def registrarCliente(clientes):
     return clientes
 
 def modificarCliente(clientes):
+    """
+    Permite actualizar los datos básicos (nombre y domicilio) de un cliente existente.
+    Solicita el ID del cliente y permite ingresar nuevos valores. Si el usuario deja un campo en blanco, se conserva el valor actual.
+    
+    Parametros:
+        clientes (dict):
+    Returns:
+        dict: El diccionario de clientes con los datos actualizados
+
+    """
     print("=== Modificar cliente ===")
 
     if len(clientes) == 0:
@@ -85,6 +104,16 @@ def modificarCliente(clientes):
     return clientes
 
 def eliminarCliente(clientes):
+    """
+    Realiza una baja lógica de un cliente cambiando su estado a inactivo.
+    Solicita el ID del cliente y, si existe en el registro, cambia el valor de la clave 'activo' a False.
+
+    Parametros:
+        clientes (dict)
+
+    Returns:
+        dict: El diccionario actualizado tras la baja lógica.
+    """
     print("=== Eliminar cliente ===")
 
     if len(clientes) == 0:
@@ -104,6 +133,15 @@ def eliminarCliente(clientes):
     return clientes
 
 def listarClientes(clientes):
+    """
+    Enlista los clientes activos con sus respectivos datos
+
+    Parametros:
+        clientes (dict)
+    
+    Returns:
+        dict: Devuelve el mismo diccionario de clientes
+    """
     print("=== Lista de Clientes ===")
 
     if len(clientes) == 0:

@@ -19,6 +19,21 @@ Pendientes:
 # FUNCIONES Herramientas
 #----------------------------------------------------------------------------------------------
 def registrarHerramienta(herramientas):
+    """
+    Registra una nueva herramienta en el inventario solicitando datos por consola.
+
+    La función calcula automáticamente el siguiente ID disponible basándose
+    en las claves existentes del diccionario. Luego, solicita al usuario
+    ingresar el nombre, costo diario y stock de la herramienta.
+
+    Parametros:
+        herramientas (dict)
+
+    Returns:
+        dict: El diccionario 'herramientas' actualizado con el nuevo registro
+    
+    
+    """
     print("=== Registrar nueva herramienta ===")
     #Logica para registrar una nueva herramienta
     if len(herramientas) == 0:
@@ -43,6 +58,17 @@ def registrarHerramienta(herramientas):
     return herramientas
 
 def modificarHerramienta(herramientas):
+    """
+    Permite al usuario modificar los atributos de una herramienta seleccionada.
+    Si el diccionario de herramientas esta vacio, la funcion termina anticipadamente.
+    Pide el id de la herramienta a modificar y luego solicita datos como el nuevo nombre, nuevo costo, nuevo stock, permitiendo dejar en blanco para dejar el valor actual.
+
+    parametros:
+        herramientas (dic)
+    returns:
+        El diccionario actualizado con las modificaciones realizadas, o el mismo diccionario si no hubo cambios o el ID no era válido
+
+    """
     print("=== Modificar herramienta ===")
 
     if len(herramientas) == 0:
@@ -73,6 +99,15 @@ def modificarHerramienta(herramientas):
     return herramientas
 
 def eliminarHerramienta(herramientas):
+    """
+    Realiza una baja lógica de una herramienta cambiando su estado a inactivo
+
+    Parametros:
+        herramientas (dict)
+    
+    return:
+    El diccionario actualizado con el estado de la herramienta modificado.
+    """
     print("=== Eliminar herramienta ===")
     
     if len(herramientas) == 0:
@@ -93,6 +128,15 @@ def eliminarHerramienta(herramientas):
 
 
 def listarHerramientas(herramientas):
+    """
+    Muestra un listado de todas las herramientas que se encuentran activas
+
+    Parametros:
+    herramientas (dict)
+
+    Returns:
+    None: Esta función solo imprime datos en pantalla y no retorna ningún valor.
+    """
     print("=== Lista de Herramientas ===")
 
     if len(herramientas) == 0:
