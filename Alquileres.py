@@ -278,7 +278,7 @@ def listarAlquileres(alquileres, clientes, herramientas):
         print("No hay alquileres registrados.")
         return
     
-    print(f"{'ID':<5} {'Herramienta ':<50} {'Cliente':<50} {'Fecha de Inicio':<25} {'Fecha de Fin':<25} {'Dias de alquiler':<15} {'Total':<10} {'Activo':<10}")
+    print(f"{'ID':<5} {'Herramienta ':<50} {'Cliente':<50} {'Fecha de Inicio':<25} {'Fecha de Fin':<25} {'Dias de alquiler':<15} {'Total':<10}")
     print('*' * 200)
 
     for id_alquiler, datos in alquileres.items():
@@ -295,12 +295,8 @@ def listarAlquileres(alquileres, clientes, herramientas):
         else:
             nombre_herramienta = "Herramienta desconocida!"
 
-        if datos["activo"]:
-            estado = "Sí"
-        else:
-            estado = "No"
-
-        print(f"{id_alquiler:<5} {nombre_herramienta:<50} {nombre_cliente:<50} {datos['fecha_inicio']:<25} {datos['fecha_fin']:<25} {datos['dias_alquiler']:<15} {datos['total']:<10} {estado}")
+        if datos["activo"] == True:
+            print(f"{id_alquiler:<5} {nombre_herramienta:<50} {nombre_cliente:<50} {datos['fecha_inicio']:<25} {datos['fecha_fin']:<25} {datos['dias_alquiler']:<15} {datos['total']:<10}")
     return
 
 #----------------------------------------------------------------------------------------------

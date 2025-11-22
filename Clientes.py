@@ -110,11 +110,11 @@ def listarClientes(clientes):
         print("No hay clientes registrados.")
         return
     
-    print(f"{'ID':<5} {'Nombre':<30} {'Domicilio':<30} {'Telefono':<15} {'Activo':<10}")
+    print(f"{'ID':<5} {'Nombre':<30} {'Domicilio':<30} {'Telefono':<15}")
     print('*' * 100)
     for id_cliente, datos in clientes.items():
-        estado = "Si" if datos["activo"] else "No"
-        print(f"{id_cliente:<5} {datos['nombre']:<30} {datos['domicilio']:<30} {datos['telefonos']['telefono1']:<15} {estado}")
+        if datos["activo"] == True:
+            print(f"{id_cliente:<5} {datos['nombre']:<30} {datos['domicilio']:<30} {datos['telefonos']['telefono1']:<15}")
     return clientes
 
 #----------------------------------------------------------------------------------------------

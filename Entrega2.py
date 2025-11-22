@@ -185,57 +185,135 @@ def main():
     }
 
     herramientas = {
-        "1":{"activa"       :True,
-              "nombre"      :"Taladro Bosch",
-              "costo_diario":4500.0,
-              "stock"       :5
-            },
-            
-        "2": {"activa"      :True,
-              "nombre"      :"Amoladora angular DeWalt",
-              "costo_diario":4200.0,
-              "stock"       :3
-            },
-
-        "3": {"activa": True,
+        "1": {
+            "activa": True,
+            "nombre": "Taladro Bosch",
+            "costo_diario": 4500.0,
+            "stock": 5,
+            "especificaciones": {
+                "potencia": "600 W",
+                "voltaje": "220 V",
+                "peso": "1.7 kg",
+                "velocidad": "3000 RPM"
+            }
+        },
+    
+        "2": {
+            "activa": True,
+            "nombre": "Amoladora angular DeWalt",
+            "costo_diario": 4200.0,
+            "stock": 3,
+            "especificaciones": {
+                "potencia": "900 W",
+                "voltaje": "220 V",
+                "peso": "2.2 kg",
+                "velocidad": "11000 RPM"
+            }
+        },
+    
+        "3": {
+            "activa": True,
             "nombre": "Sierra circular Makita",
             "costo_diario": 5200.0,
-            "stock": 4},
-
-        "4": {"activa": True,
+            "stock": 4,
+            "especificaciones": {
+                "potencia": "1400 W",
+                "voltaje": "220 V",
+                "peso": "4.0 kg",
+                "velocidad": "5500 RPM"
+            }
+        },
+    
+        "4": {
+            "activa": True,
             "nombre": "Lijadora Black+Decker",
             "costo_diario": 3100.0,
-            "stock": 6},
-
-        "5": {"activa": True,
+            "stock": 6,
+            "especificaciones": {
+                "potencia": "200 W",
+                "voltaje": "220 V",
+                "peso": "1.1 kg",
+                "velocidad": "14000 OPM"
+            }
+        },
+    
+        "5": {
+            "activa": True,
             "nombre": "Cortadora de césped eléctrica Gamma",
             "costo_diario": 5700.0,
-            "stock": 2},
-
-        "6": {"activa": True,
+            "stock": 2,
+            "especificaciones": {
+                "potencia": "1200 W",
+                "voltaje": "220 V",
+                "peso": "12 kg",
+                "velocidad": "2800 RPM"
+            }
+        },
+    
+        "6": {
+            "activa": True,
             "nombre": "Martillo demoledor Stanley",
             "costo_diario": 6300.0,
-            "stock": 3},
-
-        "7": {"activa": True,
+            "stock": 3,
+            "especificaciones": {
+                "potencia": "1600 W",
+                "voltaje": "220 V",
+                "peso": "6.0 kg",
+                "velocidad": "2900 GPM"
+            }
+        },
+    
+        "7": {
+            "activa": True,
             "nombre": "Soldadora inverter Lusqtoff",
             "costo_diario": 6900.0,
-            "stock": 2},
-
-        "8": {"activa": True,
+            "stock": 2,
+            "especificaciones": {
+                "potencia": "180 Amp",
+                "voltaje": "220 V",
+                "peso": "3.5 kg",
+                "velocidad": "N/A"
+            }
+        },
+    
+        "8": {
+            "activa": True,
             "nombre": "Compresor de aire",
             "costo_diario": 7500.0,
-            "stock": 1},
-
-        "9": {"activa": True,
+            "stock": 1,
+            "especificaciones": {
+                "potencia": "2.0 HP",
+                "voltaje": "220 V",
+                "peso": "25 kg",
+                "velocidad": "2850 RPM"
+            }
+        },
+    
+        "9": {
+            "activa": True,
             "nombre": "Pistola de calor Skil",
             "costo_diario": 2800.0,
-            "stock": 5},
-
-        "10": {"activa": True,
+            "stock": 5,
+            "especificaciones": {
+                "potencia": "1800 W",
+                "voltaje": "220 V",
+                "peso": "0.8 kg",
+                "velocidad": "N/A"
+            }
+        },
+    
+        "10": {
+            "activa": True,
             "nombre": "Atornillador inalámbrico Bosch",
             "costo_diario": 3600.0,
-            "stock": 4},
+            "stock": 4,
+            "especificaciones": {
+                "potencia": "12 V",
+                "voltaje": "Batería",
+                "peso": "0.9 kg",
+                "velocidad": "1300 RPM"
+            }
+        }
     }
 
     alquileres = {
@@ -499,8 +577,8 @@ def main():
                     print("MENÚ PRINCIPAL > MENÚ DE INFORMES")
                     print("---------------------------")
                     print("[1] Ventas y total recaudado del mes")
-                    print("[2] Resumen anual de Ventas por producto (cantidades)")
-                    print("[3] Resumen anual de Ventas por producto (precios)")
+                    print("[2] Informe anual: Cantidades totales alquiladas por producto")
+                    print("[3] Informe anual: Recaudación total por producto (precios)")
                     print("[4] Herramientas inactivas o con bajos movimientos")
                     print("---------------------------")
                     print("[0] Volver al menú anterior")

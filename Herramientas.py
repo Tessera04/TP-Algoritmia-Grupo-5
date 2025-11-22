@@ -99,12 +99,12 @@ def listarHerramientas(herramientas):
         print("No hay herramientas registradas.")
         return
     
-    print(f"{'ID':<5} {'Nombre':<50} {'Costo Diario ($)':<30} {'Stock':<20} {'Activa':<20}")
+    print(f"{'ID':<5} {'Nombre':<50} {'Costo Diario ($)':<30} {'Stock':<20}")
     print('-' * 120)
     for id_herramienta, datos in herramientas.items():
-        estado = "Sí" if datos["activa"] else "No"
-        print(f"{id_herramienta:<5} {datos['nombre']:<50} {datos['costo_diario']:<30} "
-              f"{datos['stock']:<20} {estado:<20}")
+        if datos["activa"] == True:
+            print(f"{id_herramienta:<5} {datos['nombre']:<50} {datos['costo_diario']:<30} "
+                f"{datos['stock']:<20}")
     return
 
 #----------------------------------------------------------------------------------------------
