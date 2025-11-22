@@ -20,6 +20,20 @@ from datetime import datetime
 #----------------------------------------------------------------------------------------------
 
 def informeVentasYRecaudacionMensual(alquileres, clientes, herramientas):
+    """
+    Generar un informe con todas las ventas y la recaudacion del mes actual
+
+    Parametros:
+        alquileres (dict)
+        clientes (dict)
+        herramientas (dict)
+
+    Devuelve:
+        None
+    """
+
+
+
     print("---------------------------")
     print("=== INFORME DE VENTAS Y RECAUDACION MENSUAL ===")
     print("---------------------------")
@@ -36,7 +50,7 @@ def informeVentasYRecaudacionMensual(alquileres, clientes, herramientas):
 
     total_mes = 0
     hay_datos = False
-
+    
     for alquiler in alquileres:
         datos = alquileres[alquiler]
         fecha = datetime.strptime(datos["fecha_inicio"], "%Y-%m-%d")
@@ -74,6 +88,18 @@ def informeVentasYRecaudacionMensual(alquileres, clientes, herramientas):
     return
 
 def informeVentasPorProductoCantidades(alquileres, herramientas):
+    """
+    Generar un informe de cantidades alquiladas por producto dentro de un rango de meses
+
+    Parametros:
+        alquileres (dict)
+        herramientas (dict)
+
+    Devuelve:
+        None
+    """
+
+
     print("---------------------------")
     print("=== CANTIDADES TOTALES POR MES ===")
     print("---------------------------")
@@ -161,6 +187,19 @@ def informeVentasPorProductoCantidades(alquileres, herramientas):
     return
 
 def informeVentasPorProductoPrecios(alquileres, herramientas):
+    """
+    Generar un informe del total recaudado por producto dentro de un rango de meses
+
+    Parametros:
+        alquileres (dict)
+        herramientas (dict)
+
+    Devuelve:
+        None
+    """
+        
+
+
     print("---------------------------")
     print("=== PRECIOS TOTALES POR MES (PESOS) ===")
     print("---------------------------")
@@ -246,6 +285,19 @@ def informeVentasPorProductoPrecios(alquileres, herramientas):
     return
 
 def informeHerramientasInactivas(herramientas, alquileres):
+    """
+    Generar un informe de las herramientas menos utilizadas durante el mes actual
+
+    Parametros:
+        herramientas (dict)
+        alquileres (dict)
+
+    Devuelve:
+        None
+    """
+        
+
+
     print("---------------------------")
     print("=== INFORME DE HERRAMIENTAS MENOS UTILIZADAS (MES ACTUAL) ===")
     print("---------------------------")

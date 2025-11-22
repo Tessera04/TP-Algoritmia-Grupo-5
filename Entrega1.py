@@ -242,8 +242,8 @@ def main():
         "1": {
             "id_herramienta": "3",  # Sierra circular Makita 5007N
             "id_cliente": "38992233",  # TOMÁS EZEQUIEL GARCÍA
-            "fecha_inicio": "2025-10-02",
-            "fecha_fin": "2025-10-05",
+            "fecha_inicio": "2025-11-02",
+            "fecha_fin": "2025-11-05",
             "dias_alquiler": 3,
             "total": 5200.0 * 3,  # 15600.0
             "activo": True

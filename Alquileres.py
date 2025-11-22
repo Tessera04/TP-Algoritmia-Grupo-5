@@ -19,6 +19,19 @@ from datetime import datetime
 # FUNCIONES Alquileres
 #----------------------------------------------------------------------------------------------
 def registrarAlquiler(alquileres, clientes, herramientas):
+    """
+    Registrar un nuevo alquiler de herramientas
+
+    Parametros:
+        alquileres (dict)
+        clientes (dict)
+        herramientas (dict)
+
+    Devuelve:
+        alquileres (dict): Diccionario actualizado con el nuevo alquiler registrado.
+    """
+
+
     print("=== Registrar nuevo alquiler de herramientas ===")
 
     if len(alquileres) == 0:
@@ -93,6 +106,20 @@ def registrarAlquiler(alquileres, clientes, herramientas):
     return alquileres
 
 def modificarAlquiler(alquileres, clientes, herramientas):
+    """
+    Modificar los datos de un alquiler existente
+
+    Parametros:
+        alquileres (dict)
+        clientes (dict)
+        herramientas (dict)
+
+    Devuelve:
+        alquileres (dict): Diccionario con la informacion de alquileres actualizada.
+    """
+        
+
+
     print("=== Modificar alquiler ===")
  
     if len(alquileres) == 0:
@@ -195,6 +222,18 @@ def modificarAlquiler(alquileres, clientes, herramientas):
     return alquileres
 
 def eliminarAlquiler(alquileres):
+    """
+    Dar de baja logicamente un alquiler
+
+    Parametros:
+        alquileres (dict)
+
+    Devuelve:
+        alquileres (dict): Diccionario actualizado con el alquiler marcado como inactivo.
+    """
+        
+
+
     print("=== Eliminar alquiler ===")
 
     if len(alquileres) == 0:
@@ -219,6 +258,20 @@ def eliminarAlquiler(alquileres):
     return alquileres   
 
 def listarAlquileres(alquileres, clientes, herramientas):
+    """
+    Mostrar en pantalla la lista completa de alquileres registrados
+
+    Parametros:
+        alquileres (dict)
+        clientes (dict)
+        herramientas (dict)
+
+    Devuelve:
+        None
+    """
+        
+
+
     print("=== Lista de Alquileres ===")
 
     if len(alquileres) == 0:
