@@ -13,7 +13,7 @@ Pendientes:
 #----------------------------------------------------------------------------------------------
 # MÓDULOS
 #----------------------------------------------------------------------------------------------
-...
+import json
 
 #----------------------------------------------------------------------------------------------
 # FUNCIONES Herramientas
@@ -127,7 +127,7 @@ def eliminarHerramienta(herramientas):
     return herramientas
 
 
-def listarHerramientas(herramientas):
+def listarHerramientas():
     """
     Muestra un listado de todas las herramientas que se encuentran activas
 
@@ -137,19 +137,28 @@ def listarHerramientas(herramientas):
     Returns:
     None: Esta función solo imprime datos en pantalla y no retorna ningún valor.
     """
-    print("=== Lista de Herramientas ===")
+    try:
+        archivo = open("./JSON/herramientas.json", mode="r", encoding="utf-8")
+        herramientas = json.load(archivo)
 
-    if len(herramientas) == 0:
-        print("No hay herramientas registradas.")
+        print("=== Lista de Herramientas ===")
+
+        if len(herramientas) == 0:
+            print("No hay herramientas registradas.")
+            return
+        
+        print(f"{'ID':<5} {'Nombre':<50} {'Costo Diario ($)':<30} {'Stock':<20}")
+        print('-' * 120)
+        for id_herramienta, datos in herramientas.items():
+            if datos["activa"] == True:
+                print(f"{id_herramienta:<5} {datos['nombre']:<50} {datos['costo_diario']:<30} "
+                    f"{datos['stock']:<20}")
+        
+        archivo.close()
         return
     
-    print(f"{'ID':<5} {'Nombre':<50} {'Costo Diario ($)':<30} {'Stock':<20}")
-    print('-' * 120)
-    for id_herramienta, datos in herramientas.items():
-        if datos["activa"] == True:
-            print(f"{id_herramienta:<5} {datos['nombre']:<50} {datos['costo_diario']:<30} "
-                f"{datos['stock']:<20}")
-    return
+    except(FileNotFoundError, OSError) as detalle:
+        print("Error al intentar abrir el archivo: ", detalle)
 
 #----------------------------------------------------------------------------------------------
 # CUERPO PRINCIPAL

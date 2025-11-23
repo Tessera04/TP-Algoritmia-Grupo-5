@@ -13,7 +13,7 @@ Pendientes:
 #----------------------------------------------------------------------------------------------
 # MÓDULOS
 #----------------------------------------------------------------------------------------------
-...
+import json
 
 #----------------------------------------------------------------------------------------------
 # FUNCIONES Clientes
@@ -132,28 +132,37 @@ def eliminarCliente(clientes):
     print("Cliente eliminado con éxito.")
     return clientes
 
-def listarClientes(clientes):
+def listarClientes():
     """
     Enlista los clientes activos con sus respectivos datos
 
-    Parametros:
-        clientes (dict)
-    
     Returns:
-        dict: Devuelve el mismo diccionario de clientes
+        dict: Devuelve el diccionario de clientes
     """
-    print("=== Lista de Clientes ===")
 
-    if len(clientes) == 0:
-        print("No hay clientes registrados.")
+    try:
+        archivo = open("./JSON/clientes.json", mode="r", encoding="utf-8")
+        clientes = json.load(archivo)
+
+        print("=== Lista de Clientes ===")
+
+        if len(clientes) == 0:
+            print("No hay clientes registrados.")
+            return
+        
+        print(f"{'ID':<5} {'Nombre':<30} {'Domicilio':<30} {'Telefono':<15}")
+        print('*' * 100)
+
+        for id_cliente, datos in clientes.items():
+            if datos["activo"] == True:
+                print(f"{id_cliente:<5} {datos['nombre']:<30} {datos['domicilio']:<30} {datos['telefonos']['telefono1']:<15}")
+
+        archivo.close()
         return
     
-    print(f"{'ID':<5} {'Nombre':<30} {'Domicilio':<30} {'Telefono':<15}")
-    print('*' * 100)
-    for id_cliente, datos in clientes.items():
-        if datos["activo"] == True:
-            print(f"{id_cliente:<5} {datos['nombre']:<30} {datos['domicilio']:<30} {datos['telefonos']['telefono1']:<15}")
-    return clientes
+    except(FileNotFoundError, OSError) as detalle:
+        print("Error al intentar abrir el archivo: ", detalle)
+
 
 #----------------------------------------------------------------------------------------------
 # CUERPO PRINCIPAL

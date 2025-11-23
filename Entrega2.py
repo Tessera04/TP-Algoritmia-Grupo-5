@@ -28,7 +28,8 @@ def main():
     # Inicialización de variables
     #----------------------------------------------------------------------------------------------
     """
-    Diccionarios corregidos con atributos multivalor
+    Diccionarios corregidos con atributos multivalor, no eliminar
+    
     clientes = {
         "38111222":{"activo"   :False,
                     "nombre"   :"JUAN JOSÉ GALVÁN",
@@ -478,7 +479,7 @@ def main():
                     clientes = eliminarCliente(clientes)
 
                 elif opcionSubmenu == "4":   # Opción 4 del submenú clientes
-                    clientes = listarClientes(clientes)
+                    listarClientes()
 
                 input("\nPresione ENTER para volver al menú.") # Pausa entre opciones
                 print("\n\n")
@@ -564,7 +565,7 @@ def main():
                     herramientas = eliminarHerramienta(herramientas)
 
                 elif opcionSubmenu == "4":   # Opción 4 del submenú herramientas
-                    herramientas = listarHerramientas(herramientas)
+                    listarHerramientas()
 
                 input("\nPresione ENTER para volver al menú.") # Pausa entre opciones
                 print("\n\n")
