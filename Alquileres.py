@@ -14,11 +14,12 @@ Pendientes:
 # MÓDULOS
 #----------------------------------------------------------------------------------------------
 from datetime import datetime
+from Archivos import *
 
 #----------------------------------------------------------------------------------------------
 # FUNCIONES Alquileres
 #----------------------------------------------------------------------------------------------
-def registrarAlquiler(alquileres, clientes, herramientas):
+def registrarAlquiler():
     """
     Registrar un nuevo alquiler de herramientas
 
@@ -30,7 +31,9 @@ def registrarAlquiler(alquileres, clientes, herramientas):
     Devuelve:
         alquileres (dict): Diccionario actualizado con el nuevo alquiler registrado.
     """
-
+    clientes = cargarArchivoJSON("./JSON/clientes.json")
+    herramientas = cargarArchivoJSON("./JSON/herramientas.json")
+    alquileres = cargarArchivoJSON("./JSON/alquileres.json")
 
     print("=== Registrar nuevo alquiler de herramientas ===")
 
@@ -99,13 +102,15 @@ def registrarAlquiler(alquileres, clientes, herramientas):
         "activo": True
     }
 
+    guardarArchivoJSON("./JSON/alquileres.json", alquileres)
+
     print("---------------------------")
     print("Alquiler registrado con éxito.")
     print("---------------------------")
 
     return alquileres
 
-def modificarAlquiler(alquileres, clientes, herramientas):
+def modificarAlquiler():
     """
     Modificar los datos de un alquiler existente
 
@@ -118,7 +123,9 @@ def modificarAlquiler(alquileres, clientes, herramientas):
         alquileres (dict): Diccionario con la informacion de alquileres actualizada.
     """
         
-
+    clientes = cargarArchivoJSON("./JSON/clientes.json")
+    herramientas = cargarArchivoJSON("./JSON/herramientas.json")
+    alquileres = cargarArchivoJSON("./JSON/alquileres.json")
 
     print("=== Modificar alquiler ===")
  
@@ -214,6 +221,8 @@ def modificarAlquiler(alquileres, clientes, herramientas):
         while nuevo_estado not in ("s", "n"):
             nuevo_estado = input("Opción inválida. Ingrese 's' o 'n': ").strip().lower()
         alquiler["activo"] = nuevo_estado == "s"
+    
+    guardarArchivoJSON("./JSON/alquileres.json", alquileres)
  
     print("---------------------------")
     print("Alquiler modificado correctamente.")
@@ -221,7 +230,7 @@ def modificarAlquiler(alquileres, clientes, herramientas):
  
     return alquileres
 
-def eliminarAlquiler(alquileres):
+def eliminarAlquiler():
     """
     Dar de baja logicamente un alquiler
 
@@ -232,7 +241,7 @@ def eliminarAlquiler(alquileres):
         alquileres (dict): Diccionario actualizado con el alquiler marcado como inactivo.
     """
         
-
+    alquileres = cargarArchivoJSON("./JSON/alquileres.json")
 
     print("=== Eliminar alquiler ===")
 
@@ -252,12 +261,15 @@ def eliminarAlquiler(alquileres):
         return alquileres
     
     alquileres[id_alquileres]["activo"] = False
+
+    guardarArchivoJSON("./JSON/alquileres.json", alquileres)
+
     print("---------------------------")
     print("El Alquiler fue elimiado correctamente!")
     print("---------------------------")
     return alquileres   
 
-def listarAlquileres(alquileres, clientes, herramientas):
+def listarAlquileres():
     """
     Mostrar en pantalla la lista completa de alquileres registrados
 
@@ -270,7 +282,9 @@ def listarAlquileres(alquileres, clientes, herramientas):
         None
     """
         
-
+    clientes = cargarArchivoJSON("./JSON/clientes.json")
+    herramientas = cargarArchivoJSON("./JSON/herramientas.json")
+    alquileres = cargarArchivoJSON("./JSON/alquileres.json")
 
     print("=== Lista de Alquileres ===")
 

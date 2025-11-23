@@ -13,12 +13,12 @@ Pendientes:
 #----------------------------------------------------------------------------------------------
 # MÓDULOS
 #----------------------------------------------------------------------------------------------
-import json
+from Archivos import *
 
 #----------------------------------------------------------------------------------------------
 # FUNCIONES Herramientas
 #----------------------------------------------------------------------------------------------
-def registrarHerramienta(herramientas):
+def registrarHerramienta():
     """
     Registra una nueva herramienta en el inventario solicitando datos por consola.
 
@@ -34,6 +34,9 @@ def registrarHerramienta(herramientas):
     
     
     """
+
+    herramientas = cargarArchivoJSON("./JSON/herramientas.json")
+
     print("=== Registrar nueva herramienta ===")
     #Logica para registrar una nueva herramienta
     if len(herramientas) == 0:
@@ -54,10 +57,12 @@ def registrarHerramienta(herramientas):
         "activa": True
     }
 
+    guardarArchivoJSON("./JSON/herramientas.json", herramientas)
+
     print("Herramienta registrada con éxito.")
     return herramientas
 
-def modificarHerramienta(herramientas):
+def modificarHerramienta():
     """
     Permite al usuario modificar los atributos de una herramienta seleccionada.
     Si el diccionario de herramientas esta vacio, la funcion termina anticipadamente.
@@ -69,6 +74,9 @@ def modificarHerramienta(herramientas):
         El diccionario actualizado con las modificaciones realizadas, o el mismo diccionario si no hubo cambios o el ID no era válido
 
     """
+
+    herramientas = cargarArchivoJSON("./JSON/herramientas.json")
+
     print("=== Modificar herramienta ===")
 
     if len(herramientas) == 0:
@@ -94,11 +102,13 @@ def modificarHerramienta(herramientas):
         herramientas[id_herramienta]['costo_diario'] = float(nuevo_costo)
     if nuevo_stock != "":
         herramientas[id_herramienta]['stock'] = int(nuevo_stock)
+
+    guardarArchivoJSON("./JSON/herramientas.json", herramientas)
     
     print("Herramienta modificada con éxito.")
     return herramientas
 
-def eliminarHerramienta(herramientas):
+def eliminarHerramienta():
     """
     Realiza una baja lógica de una herramienta cambiando su estado a inactivo
 
@@ -108,6 +118,9 @@ def eliminarHerramienta(herramientas):
     return:
     El diccionario actualizado con el estado de la herramienta modificado.
     """
+
+    herramientas = cargarArchivoJSON("./JSON/herramientas.json")
+
     print("=== Eliminar herramienta ===")
     
     if len(herramientas) == 0:
@@ -123,6 +136,9 @@ def eliminarHerramienta(herramientas):
         return herramientas
     
     herramientas[id_herramienta]["activa"] = False
+
+    guardarArchivoJSON("./JSON/herramientas.json", herramientas)
+
     print("Herramienta eliminada con éxito.")
     return herramientas
 
@@ -138,8 +154,7 @@ def listarHerramientas():
     None: Esta función solo imprime datos en pantalla y no retorna ningún valor.
     """
     try:
-        archivo = open("./JSON/herramientas.json", mode="r", encoding="utf-8")
-        herramientas = json.load(archivo)
+        herramientas = cargarArchivoJSON("./JSON/herramientas.json")
 
         print("=== Lista de Herramientas ===")
 
@@ -149,12 +164,12 @@ def listarHerramientas():
         
         print(f"{'ID':<5} {'Nombre':<50} {'Costo Diario ($)':<30} {'Stock':<20}")
         print('-' * 120)
+
         for id_herramienta, datos in herramientas.items():
             if datos["activa"] == True:
                 print(f"{id_herramienta:<5} {datos['nombre']:<50} {datos['costo_diario']:<30} "
                     f"{datos['stock']:<20}")
         
-        archivo.close()
         return
     
     except(FileNotFoundError, OSError) as detalle:

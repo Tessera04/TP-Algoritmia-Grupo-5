@@ -14,12 +14,13 @@ Pendientes:
 # MÓDULOS
 #----------------------------------------------------------------------------------------------
 from datetime import datetime
+from Archivos import *
 
 #----------------------------------------------------------------------------------------------
 # FUNCIONES Informes
 #----------------------------------------------------------------------------------------------
 
-def informeVentasYRecaudacionMensual(alquileres, clientes, herramientas):
+def informeVentasYRecaudacionMensual():
     """
     Generar un informe con todas las ventas y la recaudacion del mes actual
 
@@ -32,7 +33,9 @@ def informeVentasYRecaudacionMensual(alquileres, clientes, herramientas):
         None
     """
 
-
+    clientes = cargarArchivoJSON("./JSON/clientes.json")
+    herramientas = cargarArchivoJSON("./JSON/herramientas.json")
+    alquileres = cargarArchivoJSON("./JSON/alquileres.json")
 
     print("---------------------------")
     print("=== INFORME DE VENTAS Y RECAUDACION MENSUAL ===")
@@ -87,7 +90,7 @@ def informeVentasYRecaudacionMensual(alquileres, clientes, herramientas):
         print('-' * 150)
     return
 
-def informeVentasPorProductoCantidades(alquileres, herramientas):
+def informeVentasPorProductoCantidades():
     """
     Generar un informe de cantidades alquiladas por producto dentro de un rango de meses
 
@@ -99,6 +102,8 @@ def informeVentasPorProductoCantidades(alquileres, herramientas):
         None
     """
 
+    herramientas = cargarArchivoJSON("./JSON/herramientas.json")
+    alquileres = cargarArchivoJSON("./JSON/alquileres.json")
 
     print("---------------------------")
     print("=== CANTIDADES TOTALES POR MES ===")
@@ -186,7 +191,7 @@ def informeVentasPorProductoCantidades(alquileres, herramientas):
 
     return
 
-def informeVentasPorProductoPrecios(alquileres, herramientas):
+def informeVentasPorProductoPrecios():
     """
     Generar un informe del total recaudado por producto dentro de un rango de meses
 
@@ -198,7 +203,8 @@ def informeVentasPorProductoPrecios(alquileres, herramientas):
         None
     """
         
-
+    herramientas = cargarArchivoJSON("./JSON/herramientas.json")
+    alquileres = cargarArchivoJSON("./JSON/alquileres.json")
 
     print("---------------------------")
     print("=== PRECIOS TOTALES POR MES (PESOS) ===")
@@ -296,7 +302,8 @@ def informeHerramientasInactivas(herramientas, alquileres):
         None
     """
         
-
+    herramientas = cargarArchivoJSON("./JSON/herramientas.json")
+    alquileres = cargarArchivoJSON("./JSON/alquileres.json")
 
     print("---------------------------")
     print("=== INFORME DE HERRAMIENTAS MENOS UTILIZADAS (MES ACTUAL) ===")

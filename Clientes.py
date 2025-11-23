@@ -13,77 +13,89 @@ Pendientes:
 #----------------------------------------------------------------------------------------------
 # MÓDULOS
 #----------------------------------------------------------------------------------------------
-import json
+from Archivos import *
 
 #----------------------------------------------------------------------------------------------
 # FUNCIONES Clientes
 #----------------------------------------------------------------------------------------------
-def registrarCliente(clientes):
+def registrarCliente():
     """
     Registra un nuevo cliente solicitando datos personales y permitiendole ingresar 1 o mas telefonos.
 
     Parametros:
-    clientes (dict)
+
 
     Returns:
-    dict: El diccionario 'clientes' actualizado con la nueva entrada y sus teléfonos asociados.
+    dict: El diccionario 'clientes' actualizado con la nueva entrada.
     """
-    print("=== Registrar nuevo cliente ===")
-    # Lógica para registrar un nuevo id de cliente
-    if len(clientes) == 0:
-        nuevo_id = "1"
-    else:
-        nuevo_id = str(int(max(clientes.keys())) + 1)
+    try:
+        clientes = cargarArchivoJSON("./JSON/clientes.json")
 
-    #Solicitar datos del cliente
-    nombre = input("Ingrese el nombre del cliente: ").strip()
-    domicilio = input("Ingrese el domicilio del cliente: ").strip()
+        print("=== Registrar nuevo cliente ===")
+        # Lógica para registrar un nuevo id de cliente
+        if len(clientes) == 0:
+            nuevo_id = "1"
+        else:
+            nuevo_id = str(int(max(clientes.keys())) + 1)
 
-    # Cargar uno o más teléfonos
-    telefonos = {}
-    contador = 1
-    while True:
-        telefono = input(f"Ingrese el teléfono {contador}: ").strip()
-        if telefono == "":
-            print("El teléfono no puede estar vacío.")
-            continue
-        telefonos[f"telefono{contador}"] = telefono
+        #Solicitar datos del cliente
+        nombre = str(input("Ingrese el nombre del cliente: ")).strip()
+        domicilio = str(input("Ingrese el domicilio del cliente: ")).strip()
+        email = str(input("Ingrese un email valido: ")).strip()
 
-        otroTelefono = input("¿Desea agregar otro teléfono? (s/n): ").strip()
-        if otroTelefono != "s":
-            break
-        contador += 1
+        # Cargar uno o más teléfonos
+        telefonos = {}
+        contador = 1
+        while True:
+            telefono = input(f"Ingrese el teléfono {contador}: ").strip()
+            if telefono == "":
+                print("El teléfono no puede estar vacío.")
+                continue
+            telefonos[f"telefono{contador}"] = telefono
 
-    #Agregar el nuevo cliente al diccionario
-    clientes[nuevo_id] = {
-        "nombre": nombre,
-        "domicilio": domicilio,
-        "telefonos": telefonos,
-        "activo": True
-    }
-    #Mensaje de confirmacion al usuario
-    print("Cliente registrado con éxito.")
+            otroTelefono = input("¿Desea agregar otro teléfono? (s/n): ").strip()
+            if otroTelefono != "s":
+                break
+            contador += 1
 
-    return clientes
+        #Agregar el nuevo cliente al diccionario
+        clientes[nuevo_id] = {
+            "activo": True,
+            "nombre": nombre,
+            "domicilio": domicilio,
+            "email": email,
+            "telefonos": telefonos,
+        }
 
-def modificarCliente(clientes):
+        guardarArchivoJSON("./JSON/clientes.json", clientes)
+
+        #Mensaje de confirmacion al usuario
+        print("Cliente registrado con éxito.")
+
+        return clientes
+    except(TypeError) as detalle:
+        print("No se encontraron registros: ", detalle)
+
+def modificarCliente():
     """
     Permite actualizar los datos básicos (nombre y domicilio) de un cliente existente.
     Solicita el ID del cliente y permite ingresar nuevos valores. Si el usuario deja un campo en blanco, se conserva el valor actual.
     
     Parametros:
-        clientes (dict):
+
     Returns:
         dict: El diccionario de clientes con los datos actualizados
 
     """
+    clientes = cargarArchivoJSON("./JSON/clientes.json")
+
     print("=== Modificar cliente ===")
 
     if len(clientes) == 0:
         print("No hay clientes registrados.")
         return clientes
 
-    listarClientes(clientes)
+    listarClientes()
 
     id_cliente = input("Ingrese el ID del cliente a modificar: ").strip()
 
@@ -100,10 +112,12 @@ def modificarCliente(clientes):
     if nuevo_domicilio != "":
         clientes[id_cliente]['domicilio'] = nuevo_domicilio
 
+    guardarArchivoJSON("./JSON/clientes.json", clientes)
+
     print("Cliente modificado con éxito.")
     return clientes
 
-def eliminarCliente(clientes):
+def eliminarCliente():
     """
     Realiza una baja lógica de un cliente cambiando su estado a inactivo.
     Solicita el ID del cliente y, si existe en el registro, cambia el valor de la clave 'activo' a False.
@@ -114,13 +128,16 @@ def eliminarCliente(clientes):
     Returns:
         dict: El diccionario actualizado tras la baja lógica.
     """
+
+    clientes = cargarArchivoJSON("./JSON/clientes.json")
+
     print("=== Eliminar cliente ===")
 
     if len(clientes) == 0:
         print("No hay clientes registrados.")
         return clientes
     
-    listarClientes(clientes)
+    listarClientes()
 
     id_cliente = str(int(input("Ingrese el ID del cliente a eliminar: ")))
 
@@ -129,6 +146,9 @@ def eliminarCliente(clientes):
         return clientes
     
     clientes[id_cliente]["activo"] = False
+
+    guardarArchivoJSON("./JSON/clientes.json", clientes)
+
     print("Cliente eliminado con éxito.")
     return clientes
 
@@ -141,8 +161,7 @@ def listarClientes():
     """
 
     try:
-        archivo = open("./JSON/clientes.json", mode="r", encoding="utf-8")
-        clientes = json.load(archivo)
+        clientes = cargarArchivoJSON("./JSON/clientes.json")
 
         print("=== Lista de Clientes ===")
 
@@ -157,11 +176,10 @@ def listarClientes():
             if datos["activo"] == True:
                 print(f"{id_cliente:<5} {datos['nombre']:<30} {datos['domicilio']:<30} {datos['telefonos']['telefono1']:<15}")
 
-        archivo.close()
         return
     
-    except(FileNotFoundError, OSError) as detalle:
-        print("Error al intentar abrir el archivo: ", detalle)
+    except(TypeError) as detalle:
+        print("No se encontraron registros: ", detalle)
 
 
 #----------------------------------------------------------------------------------------------

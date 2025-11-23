@@ -98,7 +98,7 @@
         }
     },
     "38992233": {
-        "activo": true,
+        "activo": false,
         "nombre": "TOMÁS EZEQUIEL GARCÍA",
         "domicilio": "CATAMARCA 215",
         "email": "tomasgarcia@gmail.com",
@@ -192,5 +192,15 @@
         "telefonos": {
             "telefono1": "11-5899-3344"
         }
+    },
+    "42711896": {
+        "nombre": "Matias",
+        "domicilio": "avellaneda 1111",
+        "telefonos": {
+            "telefono1": "1144334433",
+            "telefono2": "1144556633"
+        },
+        "email": "matias@gmail.com",
+        "activo": false
     }
 }

@@ -470,13 +470,13 @@ def main():
                     break # No sale del programa, sino que vuelve al menú anterior
 
                 elif opcionSubmenu == "1":   # Opción 1 del submenú clientes
-                    clientes = registrarCliente(clientes)
+                    registrarCliente()
 
                 elif opcionSubmenu == "2":   # Opción 2 del submenú clientes
-                    clientes = modificarCliente(clientes)
+                    modificarCliente()
                 
-                elif opcionSubmenu == "3":   # Opción 3 del submenú     clientes
-                    clientes = eliminarCliente(clientes)
+                elif opcionSubmenu == "3":   # Opción 3 del submenú clientes
+                    eliminarCliente()
 
                 elif opcionSubmenu == "4":   # Opción 4 del submenú clientes
                     listarClientes()
@@ -513,16 +513,16 @@ def main():
                     break # No sale del programa, sino que vuelve al menú anterior
                 
                 elif opcionSubmenu == "1":   # Opción 1 del submenú alquileres
-                    alquileres = registrarAlquiler(alquileres, clientes, herramientas)
+                    registrarAlquiler()
                     
                 elif opcionSubmenu == "2":   # Opción 2 del submenú alquileres
-                    alquileres = modificarAlquiler(alquileres)
+                    modificarAlquiler()
 
                 elif opcionSubmenu == "3":   # Opción 3 del submenú alquileres
-                    alquileres = eliminarAlquiler(alquileres)
+                    eliminarAlquiler()
 
                 elif opcionSubmenu == "4":   # Opción 4 del submenú alquileres
-                    alquileres = listarAlquileres(alquileres, clientes, herramientas)
+                    listarAlquileres()
 
                 input("\nPresione ENTER para volver al menú.") # Pausa entre opciones
                 print("\n\n")
@@ -556,13 +556,13 @@ def main():
                     break # No sale del programa, sino que vuelve al menú anterior
 
                 elif opcionSubmenu == "1":   # Opción 1 del submenú herramientas
-                    herramientas = registrarHerramienta(herramientas)
+                    registrarHerramienta()
 
                 elif opcionSubmenu == "2":   # Opción 2 del submenú herramientas
-                    herramientas = modificarHerramienta(herramientas)
+                    modificarHerramienta()
 
                 elif opcionSubmenu == "3":   # Opción 3 del submenú herramientas
-                    herramientas = eliminarHerramienta(herramientas)
+                    eliminarHerramienta()
 
                 elif opcionSubmenu == "4":   # Opción 4 del submenú herramientas
                     listarHerramientas()
@@ -599,16 +599,16 @@ def main():
                     break # No sale del programa, sino que vuelve al menú anterior
 
                 elif opcionSubmenu == "1":   # Opción 1 del submenú informes
-                    informes = informeVentasYRecaudacionMensual(alquileres,clientes,herramientas)
+                    informeVentasYRecaudacionMensual()
 
                 elif opcionSubmenu == "2":   # Opción 2 del submenú informes
-                    informes = informeVentasPorProductoCantidades(alquileres, herramientas)
+                    informeVentasPorProductoCantidades()
 
                 elif opcionSubmenu == "3":   # Opción 3 del submenú  informes
-                    informes = informeVentasPorProductoPrecios(alquileres, herramientas)
+                    informeVentasPorProductoPrecios()
 
                 elif opcionSubmenu == "4":   # Opción 4 del submenú informes
-                    informes = informeHerramientasInactivas(herramientas, alquileres)
+                    informeHerramientasInactivas()
 
                 input("\nPresione ENTER para volver al menú.") # Pausa entre opciones
                 print("\n\n")
