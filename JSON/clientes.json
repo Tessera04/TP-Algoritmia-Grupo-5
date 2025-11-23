@@ -1,0 +1,196 @@
+{
+    "38111222": {
+        "activo": false,
+        "nombre": "JUAN JOSÉ GALVÁN",
+        "domicilio": "ESTRADA 2048",
+        "email": "juangalvan@gmail.com",
+        "telefonos": {
+            "telefono1": "11-4521-8956",
+            "telefono2": "15-1526-4859",
+            "telefono3": "11-7812-5689"
+        }
+    },
+    "25888444": {
+        "activo": true,
+        "nombre": "CLARA JULIETA FASIOLI",
+        "domicilio": "INDEPENDENCIA 322",
+        "email": "clarajf332@outlook.com",
+        "telefonos": {
+            "telefono1": "11 5623 8945"
+        }
+    },
+    "33299118": {
+        "activo": true,
+        "nombre": "MARCOS EMILIANO VERA",
+        "domicilio": "LAPRIDA 1850",
+        "email": "marcosvera@yahoo.com",
+        "telefonos": {
+            "telefono1": "11-4738-1122",
+            "telefono2": "15-6132-0029"
+        }
+    },
+    "41765012": {
+        "activo": true,
+        "nombre": "SOFÍA ALEJANDRA MONTIEL",
+        "domicilio": "ALSINA 542",
+        "email": "sofia.montiel@hotmail.com",
+        "telefonos": {
+            "telefono1": "11-3874-2255"
+        }
+    },
+    "29177654": {
+        "activo": true,
+        "nombre": "DIEGO MANUEL PERALTA",
+        "domicilio": "SALTA 980",
+        "email": "dperalta@gmail.com",
+        "telefonos": {
+            "telefono1": "11-4962-7412",
+            "telefono2": "15-5339-8821"
+        }
+    },
+    "30987651": {
+        "activo": true,
+        "nombre": "NATALIA SOLEDAD PÉREZ",
+        "domicilio": "PUEYRREDÓN 2110",
+        "email": "nataperez@live.com",
+        "telefonos": {
+            "telefono1": "11-6859-3011"
+        }
+    },
+    "42711895": {
+        "activo": true,
+        "nombre": "GABRIEL IGNACIO ROMERO",
+        "domicilio": "PAZ 705",
+        "email": "gromero77@gmail.com",
+        "telefonos": {
+            "telefono1": "11-5210-7744",
+            "telefono2": "11-7874-9630"
+        }
+    },
+    "36890221": {
+        "activo": true,
+        "nombre": "VALERIA DENISE GIMÉNEZ",
+        "domicilio": "SARMIENTO 310",
+        "email": "valegimenez@gmail.com",
+        "telefonos": {
+            "telefono1": "11-6668-2233",
+            "telefono2": "15-5021-8890",
+            "telefono3": "11-4390-5578"
+        }
+    },
+    "41233789": {
+        "activo": true,
+        "nombre": "LEANDRO FABRICIO MORALES",
+        "domicilio": "BELGRANO 1664",
+        "email": "lfmorales@outlook.com",
+        "telefonos": {
+            "telefono1": "11-3777-2134"
+        }
+    },
+    "30566123": {
+        "activo": true,
+        "nombre": "ANDREA BEATRIZ LÓPEZ",
+        "domicilio": "SAN MARTÍN 882",
+        "email": "andrealopez@gmail.com",
+        "telefonos": {
+            "telefono1": "11-5398-7452",
+            "telefono2": "11-7981-5526"
+        }
+    },
+    "38992233": {
+        "activo": true,
+        "nombre": "TOMÁS EZEQUIEL GARCÍA",
+        "domicilio": "CATAMARCA 215",
+        "email": "tomasgarcia@gmail.com",
+        "telefonos": {
+            "telefono1": "11-4441-6689"
+        }
+    },
+    "27784566": {
+        "activo": true,
+        "nombre": "MARÍA LUJÁN PAREDES",
+        "domicilio": "SAN JUAN 950",
+        "email": "mlpar83@yahoo.com",
+        "telefonos": {
+            "telefono1": "11-3219-7710",
+            "telefono2": "11-7985-6631"
+        }
+    },
+    "41388290": {
+        "activo": true,
+        "nombre": "NICOLÁS ADRIÁN GÓMEZ",
+        "domicilio": "YRIGOYEN 1299",
+        "email": "nicolasgomez@live.com",
+        "telefonos": {
+            "telefono1": "11-4020-7411"
+        }
+    },
+    "29644109": {
+        "activo": true,
+        "nombre": "CARLA ANDREA VILLALBA",
+        "domicilio": "TUCUMÁN 777",
+        "email": "cvillalba@gmail.com",
+        "telefonos": {
+            "telefono1": "11-6932-2250",
+            "telefono2": "15-5001-7859"
+        }
+    },
+    "34591277": {
+        "activo": true,
+        "nombre": "JORGE LUIS RIVERO",
+        "domicilio": "MAIPÚ 1800",
+        "email": "jorgerivero@outlook.com",
+        "telefonos": {
+            "telefono1": "11-3254-9977"
+        }
+    },
+    "38900011": {
+        "activo": true,
+        "nombre": "LUCÍA VANESA TORRES",
+        "domicilio": "MITRE 620",
+        "email": "lucia.torres@gmail.com",
+        "telefonos": {
+            "telefono1": "11-4422-1358",
+            "telefono2": "11-7935-6214",
+            "telefono3": "11-6150-8877"
+        }
+    },
+    "27811984": {
+        "activo": true,
+        "nombre": "MARTÍN ESTEBAN FERRARI",
+        "domicilio": "MORENO 431",
+        "email": "mferrari@hotmail.com",
+        "telefonos": {
+            "telefono1": "11-5668-2005"
+        }
+    },
+    "42331005": {
+        "activo": true,
+        "nombre": "ROCÍO BELÉN SALGADO",
+        "domicilio": "CORDOBA 1561",
+        "email": "rocio.salgado@gmail.com",
+        "telefonos": {
+            "telefono1": "11-6311-2289",
+            "telefono2": "11-7144-9621"
+        }
+    },
+    "30771299": {
+        "activo": true,
+        "nombre": "IGNACIO FEDERICO BIANCHI",
+        "domicilio": "SANTA FE 330",
+        "email": "ignabi@live.com",
+        "telefonos": {
+            "telefono1": "11-4566-7745",
+            "telefono2": "15-7793-1112"
+        }
+    },
+    "41022987": {
+        "activo": true,
+        "nombre": "ANA CELESTE CÁCERES",
+        "domicilio": "BELGRANO 999",
+        "email": "anacaceres@gmail.com",
+        "telefonos": {
+            "telefono1": "11-5899-3344"
+        }
+    }
+}

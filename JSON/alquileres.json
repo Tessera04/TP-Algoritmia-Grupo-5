@@ -1,0 +1,92 @@
+{
+    "2025.10.02 10:00:00": {
+        "id_herramienta": "3",
+        "id_cliente": "38992233",
+        "fecha_inicio": "2025.10.02 10:00:00",
+        "fecha_fin": "2025.10.05 18:00:00",
+        "dias_alquiler": 3,
+        "total": 15600.0,
+        "activo": true
+    },
+    "2025.10.04 10:00:00": {
+        "id_herramienta": "6",
+        "id_cliente": "30566123",
+        "fecha_inicio": "2025.10.04 10:00:00",
+        "fecha_fin": "2025.10.08 18:00:00",
+        "dias_alquiler": 4,
+        "total": 25200.0,
+        "activo": true
+    },
+    "2025.10.05 10:00:00": {
+        "id_herramienta": "1",
+        "id_cliente": "41765012",
+        "fecha_inicio": "2025.10.05 10:00:00",
+        "fecha_fin": "2025.10.09 18:00:00",
+        "dias_alquiler": 4,
+        "total": 18000.0,
+        "activo": true
+    },
+    "2025.10.07 10:00:00": {
+        "id_herramienta": "10",
+        "id_cliente": "29644109",
+        "fecha_inicio": "2025.10.07 10:00:00",
+        "fecha_fin": "2025.10.10 18:00:00",
+        "dias_alquiler": 3,
+        "total": 10800.0,
+        "activo": true
+    },
+    "2025.10.09 10:00:00": {
+        "id_herramienta": "4",
+        "id_cliente": "27784566",
+        "fecha_inicio": "2025.10.09 10:00:00",
+        "fecha_fin": "2025.10.11 18:00:00",
+        "dias_alquiler": 2,
+        "total": 6200.0,
+        "activo": true
+    },
+    "2025.10.10 10:00:00": {
+        "id_herramienta": "7",
+        "id_cliente": "27811984",
+        "fecha_inicio": "2025.10.10 10:00:00",
+        "fecha_fin": "2025.10.15 18:00:00",
+        "dias_alquiler": 5,
+        "total": 34500.0,
+        "activo": true
+    },
+    "2025.10.12 10:00:00": {
+        "id_herramienta": "9",
+        "id_cliente": "42331005",
+        "fecha_inicio": "2025.10.12 10:00:00",
+        "fecha_fin": "2025.10.14 18:00:00",
+        "dias_alquiler": 2,
+        "total": 5600.0,
+        "activo": true
+    },
+    "2025.10.13 10:00:00": {
+        "id_herramienta": "2",
+        "id_cliente": "41022987",
+        "fecha_inicio": "2025.10.13 10:00:00",
+        "fecha_fin": "2025.10.17 18:00:00",
+        "dias_alquiler": 4,
+        "total": 16800.0,
+        "activo": true
+    },
+    "2025.10.16 10:00:00": {
+        "id_herramienta": "8",
+        "id_cliente": "38900011",
+        "fecha_inicio": "2025.10.16 10:00:00",
+        "fecha_fin": "2025.10.20 18:00:00",
+        "dias_alquiler": 4,
+        "total": 30000.0,
+        "activo": true
+    },
+    "2025.10.18 10:00:00": {
+        "id_herramienta": "5",
+        "id_cliente": "34591277",
+        "fecha_inicio": "2025.10.18 10:00:00",
+        "fecha_fin": "2025.10.21 18:00:00",
+        "dias_alquiler": 3,
+        "total": 17100.0,
+        "activo": true
+    }
+}
