@@ -8,6 +8,17 @@ Descripción: Sistema de gestión CRUD para una empresa de alquiler de herramien
 modificar, eliminar y listar clientes, herramientas y alquileres. Además, genera informes sobre ventas
 y herramientas inactivas.
 
+Archivos principales:
+- Entrega2.py: Archivo principal que contiene el menú y la lógica del programa.
+- Clientes.py: Módulo para la gestión de clientes (registro, modificación, eliminación, listado).
+- Herramientas.py: Módulo para la gestión de herramientas (registro, modificación, eliminación, listado).
+- Alquileres.py: Módulo para la gestión de alquileres (registro, modificación, eliminación, listado).
+- Informes.py: Módulo para generar informes sobre ventas y herramientas inactivas.
+
+Archivos adicionales:
+- Validaciones.py: Módulo con funciones de validación de datos.
+- Archivos.py: Módulo para manejo de persistencia de datos (lectura y escritura en archivos).
+
 Pendientes:
 -----------------------------------------------------------------------------------------------
 """

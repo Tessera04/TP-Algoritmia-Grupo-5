@@ -4,8 +4,7 @@ Título: Trabajo Práctico Grupo 5 - Sistema de Gestión de Alquiler de Herramie
 Fecha: 22/10/2025
 Autor: Vicente Courtinade, Marcos Gimenez, Matias Gonzalez, Lautaro Ruisoto, Santiago Salas.
 
-Descripción: Módulo de Herramientas del sistema de gestión de alquiler de herramientas. 
-Proporciona funciones CRUD para registrar, modificar, eliminar y listar herramientas disponibles para alquiler.
+Descripción: Módulo de validaciones para el sistema de gestión de alquiler de herramientas.
 
 Pendientes:
 -----------------------------------------------------------------------------------------------
@@ -23,7 +22,6 @@ def validarTexto(textoInput, textoOutput):
     Valida que el texto cumpla las validaciones.
 
     Parametros:
-        variable (str)
         textoInput (str)
         textoOutput (str)
     Returns:
@@ -53,7 +51,6 @@ def validarTextoNA(textoInput, textoOutput):
     Valida que el texto cumpla las validaciones.
 
     Parametros:
-        variable (str)
         textoInput (str)
         textoOutput (str)
     Returns:

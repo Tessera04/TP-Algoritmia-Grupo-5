@@ -29,8 +29,6 @@ def informeVentasYRecaudacionMensual():
         clientes.json (dict)
         herramientas.json (dict)
 
-    Devuelve:
-        None
     """
     try:
         try:
@@ -103,8 +101,6 @@ def informeCantidades():
         alquileres.json (dict)
         herramientas.json (dict)
 
-    Devuelve:
-        None
     """
     try:
         try:
@@ -233,8 +229,6 @@ def informePrecios():
         alquileres.json (dict)
         herramientas.json (dict)
 
-    Devuelve:
-        None
     """
     try: 
         try:
@@ -364,8 +358,6 @@ def informeHerramientasInactivas():
         herramientas.json (dict)
         alquileres.json (dict)
 
-    Devuelve:
-        None
     """
     try:
         herramientas = cargarArchivoJSON("./JSON/herramientas.json")

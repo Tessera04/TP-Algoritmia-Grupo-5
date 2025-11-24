@@ -4,7 +4,7 @@ Título: Trabajo Práctico Grupo 5 - Sistema de Gestión de Alquiler de Herramie
 Fecha: 22/10/2025
 Autor: Vicente Courtinade, Marcos Gimenez, Matias Gonzalez, Lautaro Ruisoto, Santiago Salas.
 
-Descripción: 
+Descripción: Módulo para manejo de persistencia de datos (lectura y escritura en archivos).
 
 Pendientes:
 -----------------------------------------------------------------------------------------------
@@ -42,6 +42,9 @@ def guardarArchivoJSON(ruta, datos):
     Parametros:
         ruta (str)
         datos (dict)
+    
+    Returns:
+        None
     """
     try:
         archivo = open(ruta, mode="w", encoding="utf-8")
