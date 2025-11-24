@@ -196,7 +196,7 @@ def informeCantidades():
                             if id_h in herramientas:
                                 nombre = herramientas[id_h]["nombre"]
                                 if etiqueta_mes in resumen[nombre]:
-                                    resumen[nombre][etiqueta_mes] += datos["dias_alquiler"]
+                                    resumen[nombre][etiqueta_mes] += 1
 
         # Mostrar tabla
         print("-" * 150)
