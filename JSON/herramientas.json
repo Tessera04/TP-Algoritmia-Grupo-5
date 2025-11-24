@@ -15,7 +15,7 @@
         "activa": true,
         "nombre": "Amoladora angular DeWalt",
         "costo_diario": 4200.0,
-        "stock": 3,
+        "stock": 2,
         "especificaciones": {
             "potencia": "900 W",
             "voltaje": "220 V",

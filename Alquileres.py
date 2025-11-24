@@ -15,6 +15,7 @@ Pendientes:
 #----------------------------------------------------------------------------------------------
 from datetime import datetime
 from Archivos import *
+from Validaciones import *
 
 #----------------------------------------------------------------------------------------------
 # FUNCIONES Alquileres
@@ -35,11 +36,6 @@ def registrarAlquiler():
 
         print("=== Registrar nuevo alquiler de herramientas ===")
 
-        if len(alquileres) == 0:
-            nuevo_id = "1"
-        else:
-            nuevo_id = str(int(max(alquileres.keys())) + 1)
-
         print("---------------------------")
         print("Clientes disponibles:")
         print("---------------------------")
@@ -52,7 +48,7 @@ def registrarAlquiler():
         idCliente = input("Ingrese el ID del cliente seleccionado: ").strip()
         print("---------------------------")
 
-        if id_cliente not in clientes:
+        if idCliente not in clientes:
             print("---------------------------")
             print("Cliente no encontrado.")
             print("---------------------------")
@@ -63,24 +59,32 @@ def registrarAlquiler():
         print("---------------------------")
         for id_herramienta, datos in herramientas.items():
             if datos["activa"]:
-                print(f"{id_herramienta} - {datos['nombre']}")
+                print(f"{id_herramienta} - {datos['nombre']} (Stock: {datos['stock']})")
         
         #Solicitar datos del cliente
         print("---------------------------")
         idHerramienta = input("Ingrese el ID de la herramienta seleccionada: ").strip()
         print("---------------------------")
 
-        if id_herramienta not in herramientas:
+        if idHerramienta not in herramientas:
             print("---------------------------")
             print("Herramienta no encontrada.")
             print("---------------------------")
             return alquileres
         
-        fecha_inicio = input("Ingrese la fecha de inicio (AAAA-MM-DD): ").strip()
-        fecha_fin = input("Ingrese la fecha de fin (AAAA-MM-DD): ").strip()
-
-        f1 = datetime.strptime(fecha_inicio, "%Y-%m-%d")
-        f2 = datetime.strptime(fecha_fin, "%Y-%m-%d")
+        if herramientas[idHerramienta]["stock"] <= 0:
+            print("No hay stock disponible de esa herramienta!")
+            return alquileres
+        
+        fecha_inicio = input("Ingrese la fecha de inicio (AAAA.MM.DD HH:mm:ss): ").strip()
+        fecha_fin = input("Ingrese la fecha de fin (AAAA.MM.DD HH:mm:ss): ").strip()
+        try:
+            f1 = datetime.strptime(fecha_inicio, "%Y.%m.%d %H:%M:%S")
+            f2 = datetime.strptime(fecha_fin, "%Y.%m.%d %H:%M:%S")
+        except ValueError:
+            print("El formato de fecha es incorrecto. Use AAAA.MM.DD HH:mm:ss")
+            return alquileres
+        
         dias_alquiler = (f2 - f1).days
 
         if dias_alquiler <= 0:
@@ -90,7 +94,9 @@ def registrarAlquiler():
         precio_dia = herramientas[id_herramienta]["costo_diario"]
         total = precio_dia * dias_alquiler
 
-        alquileres[nuevo_id] = {
+        clave = datetime.now().strftime("%Y.%m.%d %H:%M:%S")
+
+        alquileres[clave] = {
             "id_herramienta": idHerramienta,
             "id_cliente": idCliente,
             "fecha_inicio": fecha_inicio,
@@ -100,7 +106,11 @@ def registrarAlquiler():
             "activo": True
         }
 
+        #Actualizacion del stock de herramientas
+        herramientas[idHerramienta]["stock"] -= 1
+
         guardarArchivoJSON("./JSON/alquileres.json", alquileres)
+        guardarArchivoJSON("./JSON/herramientas.json", herramientas)
 
         print("---------------------------")
         print("Alquiler registrado con éxito.")
@@ -126,7 +136,7 @@ def modificarAlquiler():
 
         print("=== Modificar alquiler ===")
     
-        if len(alquileres) == 0:
+        if not alquileres:
             print("No hay alquileres registrados.")
             return alquileres
     
@@ -140,6 +150,7 @@ def modificarAlquiler():
             print(f"{id_alquiler:<5} {nombre_cliente:<20} {nombre_herramienta:<25} {estado:<10}")
     
         print("-" * 60)
+
         id_alquiler = input("Ingrese el ID del alquiler que desea modificar: ").strip()
     
         if id_alquiler not in alquileres:
@@ -166,7 +177,9 @@ def modificarAlquiler():
             for id_cliente, datos in clientes.items():
                 if datos["activo"]:
                     print(f"{id_cliente} - {datos['nombre']}")
-            nuevo_cliente = input("Ingrese el nuevo ID de cliente: ").strip()
+
+            nuevo_cliente = input("Ingrese el ID del cliente nuevo: ").strip()
+
             if nuevo_cliente in clientes and clientes[nuevo_cliente]["activo"]:
                 alquiler["id_cliente"] = nuevo_cliente
             else:
@@ -181,7 +194,7 @@ def modificarAlquiler():
             for id_herramienta, datos in herramientas.items():
                 if datos["activa"]:
                     print(f"{id_herramienta} - {datos['nombre']}")
-            nueva_herramienta = input("Ingrese el nuevo ID de herramienta: ").strip()
+            nueva_herramienta = input("Ingrese el ID de la herramienta nueva: ").strip()
             if nueva_herramienta in herramientas and herramientas[nueva_herramienta]["activa"]:
                 alquiler["id_herramienta"] = nueva_herramienta
             else:
@@ -192,43 +205,54 @@ def modificarAlquiler():
         while opcion not in ("s", "n"):
             opcion = input("Opción inválida. Ingrese 's' o 'n': ").strip().lower()
         if opcion == "s":
-            fecha_inicio = input("Ingrese nueva fecha de inicio (AAAA-MM-DD): ").strip()
-            fecha_fin = input("Ingrese nueva fecha de fin (AAAA-MM-DD): ").strip()
-    
-            f1 = datetime.strptime(fecha_inicio, "%Y-%m-%d")
-            f2 = datetime.strptime(fecha_fin, "%Y-%m-%d")
-    
-            dias_alquiler = (f2 - f1).days
-            if dias_alquiler <= 0:
-                print("La fecha de fin debe ser posterior a la de inicio. No se modificaron las fechas.")
-            else:
-                alquiler["fecha_inicio"] = fecha_inicio
-                alquiler["fecha_fin"] = fecha_fin
-                alquiler["dias_alquiler"] = dias_alquiler
-                precio_dia = herramientas[alquiler["id_herramienta"]]["costo_diario"]
-                alquiler["total"] = precio_dia * dias_alquiler
-                print("Fechas y total actualizados correctamente.")
-    
+            try:
+                fecha_inicio = input("Ingrese nueva fecha de inicio (AAAA.MM.DD HH:mm:ss): ").strip()
+                fecha_fin = input("Ingrese nueva fecha de fin (AAAA.MM.DD HH:mm:ss): ").strip()
+        
+                f1 = datetime.strptime(fecha_inicio, "%Y.%m.%d %H:%M:%S")
+                f2 = datetime.strptime(fecha_fin, "%Y.%m.%d %H:%M:%S")
+        
+                dias_alquiler = (f2 - f1).days
+
+                if dias_alquiler <= 0:
+                    print("La fecha de fin debe ser posterior a la de inicio. No se modificaron las fechas.")
+                else:
+                    alquiler["fecha_inicio"] = fecha_inicio
+                    alquiler["fecha_fin"] = fecha_fin
+                    alquiler["dias_alquiler"] = dias_alquiler
+
+                    precio_dia = herramientas[alquiler["id_herramienta"]]["costo_diario"]
+                    alquiler["total"] = precio_dia * dias_alquiler
+
+                    print("Fechas y total actualizados correctamente.")
+            except ValueError:
+                print("El formato de fecha es invalido. Las fechas no se modificaron")
+
+
         # --- Cambiar estado activo ---
         opcion = input("¿Desea cambiar el estado del alquiler (activo/inactivo)? (s/n): ").strip().lower()
         while opcion not in ("s", "n"):
             opcion = input("Opción inválida. Ingrese 's' o 'n': ").strip().lower()
         if opcion == "s":
             nuevo_estado = input("Ingrese 's' para activo o 'n' para inactivo: ").strip().lower()
-            while nuevo_estado not in ("s", "n"):
-                nuevo_estado = input("Opción inválida. Ingrese 's' o 'n': ").strip().lower()
-            alquiler["activo"] = nuevo_estado == "s"
+            if nuevo_estado in ("s", "n"):
+                alquiler["activo"] = nuevo_estado == "s"
+            else:
+                print("Estado invalido. Se mantiene el actual")
+            
+        try:
+            guardarArchivoJSON("./JSON/alquileres.json", alquileres)
         
-        guardarArchivoJSON("./JSON/alquileres.json", alquileres)
-    
-        print("---------------------------")
-        print("Alquiler modificado correctamente.")
-        print("---------------------------")
+            print("---------------------------")
+            print("Alquiler modificado correctamente.")
+            print("---------------------------")
+        except Exception as e:
+            print("ERROR!: No se pudo guardar el archivo: ", e)
 
     except(TypeError) as detalle:
         print("No se encontraron registros: ", detalle)
     except Exception as e:
-        print("ERROR!: Error inesperado al guardar el archivo: ", e)
+        print("ERROR!: Error inesperado: ", e)
 
 def eliminarAlquiler():
     """

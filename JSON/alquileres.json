@@ -88,5 +88,14 @@
         "dias_alquiler": 3,
         "total": 17100.0,
         "activo": true
+    },
+    "2025.11.24 18:06:48": {
+        "id_herramienta": "2",
+        "id_cliente": "42711899",
+        "fecha_inicio": "2025.11.23 22:10:10",
+        "fecha_fin": "2025.11.27 20:10:00",
+        "dias_alquiler": 3,
+        "total": 13332.0,
+        "activo": false
     }
 }

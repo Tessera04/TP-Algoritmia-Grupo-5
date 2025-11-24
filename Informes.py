@@ -33,9 +33,13 @@ def informeVentasYRecaudacionMensual():
         None
     """
     try:
-        clientes = cargarArchivoJSON("./JSON/clientes.json")
-        herramientas = cargarArchivoJSON("./JSON/herramientas.json")
-        alquileres = cargarArchivoJSON("./JSON/alquileres.json")
+        try:
+            clientes = cargarArchivoJSON("./JSON/clientes.json")
+            herramientas = cargarArchivoJSON("./JSON/herramientas.json")
+            alquileres = cargarArchivoJSON("./JSON/alquileres.json")
+        except Exception as error:
+            print("No se pudieron abrir los archivos correspondientes: ", error)
+            return
 
         print("---------------------------")
         print("=== INFORME DE VENTAS Y RECAUDACION MENSUAL ===")
@@ -54,9 +58,9 @@ def informeVentasYRecaudacionMensual():
         total_mes = 0
         hay_datos = False
         
-        for alquiler in alquileres:
-            datos = alquileres[alquiler]
-            fecha = datetime.strptime(datos["fecha_inicio"], "%Y-%m-%d")
+        for id_alquiler in alquileres:
+            datos = alquileres[id_alquiler]
+            fecha = datetime.strptime(datos["fecha_inicio"], "%Y.%m.%d %H:%M:%S")
 
             if fecha.year == anio_actual and fecha.month == mes_actual:
                 hay_datos = True
@@ -103,19 +107,43 @@ def informeCantidades():
         None
     """
     try:
-        herramientas = cargarArchivoJSON("./JSON/herramientas.json")
-        alquileres = cargarArchivoJSON("./JSON/alquileres.json")
-
+        try:
+            herramientas = cargarArchivoJSON("./JSON/herramientas.json")
+            alquileres = cargarArchivoJSON("./JSON/alquileres.json")
+        except Exception as error:
+            print("No se pudieron abrir los archivos correspondientes: ", error)
+            return
+        
         print("---------------------------")
-        print("=== CANTIDADES TOTALES POR MES ===")
+        print("=== CANTIDADES TOTALES ALQUILADAS POR MES ===")
         print("---------------------------")
-        print("Rango máximo: 12 meses.")
+        print("Podes ingresar solo el año o año+mes. Rango máximo: 12 meses.")
 
         # Solicitar rango de fechas al usuario
-        anio_inicio = int(input("Ingrese el año de inicio (por ejemplo 2025): "))
-        mes_inicio = int(input("Ingrese el mes de inicio (1-12): "))
-        anio_fin = int(input("Ingrese el año de fin (por ejemplo 2025): "))
-        mes_fin = int(input("Ingrese el mes de fin (1-12): "))
+        try:
+            anio_inicio = int(input("Ingrese el año de inicio (por ejemplo 2025): ").strip())
+            mes_inicio_a = input("Ingrese el mes de inicio (1-12): ").strip()
+
+            if mes_inicio_a == "":
+                mes_inicio = 1
+            else:
+                mes_inicio = int(mes_inicio_a)
+
+            anio_fin_a = input("Ingrese el año de fin (por ejemplo 2025): ").strip()
+            mes_fin_a = input("Ingrese el mes de fin (1-12): ").strip()
+
+            if mes_fin_a == "":
+                mes_fin = 12
+            else:
+                mes_fin = int(mes_fin_a)
+            
+            if anio_fin_a == "":
+                anio_fin = anio_inicio
+            else:
+                anio_fin = int(anio_fin_a)
+        except Exception:
+            print("Los datos ingresados no son validos!")
+            return
 
         fecha_inicio = datetime(anio_inicio, mes_inicio, 1)
         fecha_fin = datetime(anio_fin, mes_fin, 28)
@@ -155,20 +183,24 @@ def informeCantidades():
 
         # Recorrer alquileres dentro del rango
         for id_a in alquileres:
-            datos = alquileres[id_a]
-            id_h = datos["id_herramienta"]
-            fecha_str = datos["fecha_inicio"]
-            dias = datos["dias_alquiler"]
+                datos = alquileres[id_a]
 
-            fecha = datetime.strptime(fecha_str, "%Y.%m.%d %H:%M:%S")
-            if fecha < fecha_inicio or fecha > fecha_fin:
-                continue
+                try:
+                    fecha = datetime.strptime(datos["fecha_inicio"], "%Y.%m.%d %H:%M:%S")
+                except Exception:
+                    print(f"Fecha inválida en registro {id_a}.")
+                    fecha = None
 
-            etiqueta_mes = f"{meses_abrev[fecha.month - 1]}.{str(fecha.year)[2:]}"
-            nombre_h = herramientas[id_h]["nombre"]
+                if fecha is not None:
+                    if fecha >= fecha_inicio:
+                        if fecha <= fecha_fin:
+                            etiqueta_mes = f"{meses_abrev[fecha.month - 1]}.{str(fecha.year)[2:]}"
+                            id_h = datos["id_herramienta"]
 
-            if etiqueta_mes in resumen[nombre_h]:
-                resumen[nombre_h][etiqueta_mes] += dias
+                            if id_h in herramientas:
+                                nombre = herramientas[id_h]["nombre"]
+                                if etiqueta_mes in resumen[nombre]:
+                                    resumen[nombre][etiqueta_mes] += datos["dias_alquiler"]
 
         # Mostrar tabla
         print("-" * 150)
@@ -205,19 +237,43 @@ def informePrecios():
         None
     """
     try: 
-        herramientas = cargarArchivoJSON("./JSON/herramientas.json")
-        alquileres = cargarArchivoJSON("./JSON/alquileres.json")
+        try:
+            herramientas = cargarArchivoJSON("./JSON/herramientas.json")
+            alquileres = cargarArchivoJSON("./JSON/alquileres.json")
+        except Exception as error:
+            print("Error al cargar los archivos JSON:", error)
+            return
 
         print("---------------------------")
-        print("=== PRECIOS TOTALES POR MES (PESOS) ===")
+        print("=== CANTIDAD DE ALQUILERES TOTALES POR MES EN PESOS ===")
         print("---------------------------")
-        print("Rango maximo: 12 meses.")
+        print("Podes ingresar solo el año o año+mes. Rango máximo: 12 meses.")
 
         # Solicitar rango de fechas al usuario
-        anio_inicio = int(input("Ingrese el año de inicio (por ejemplo 2025): "))
-        mes_inicio = int(input("Ingrese el mes de inicio (1-12): "))
-        anio_fin = int(input("Ingrese el año de fin (por ejemplo 2025): "))
-        mes_fin = int(input("Ingrese el mes de fin (1-12): "))
+        try:
+            anio_inicio = int(input("Ingrese el año de inicio (por ejemplo 2025): ").strip())
+            mes_inicio_a = input("Ingrese el mes de inicio (1-12): ").strip()
+
+            if mes_inicio_a == "":
+                mes_inicio = 1
+            else:
+                mes_inicio = int(mes_inicio_a)
+
+            anio_fin_a = input("Ingrese el año de fin (por ejemplo 2025): ").strip()
+            mes_fin_a = input("Ingrese el mes de fin (1-12): ").strip()
+
+            if mes_fin_a == "":
+                mes_fin = 12
+            else:
+                mes_fin = int(mes_fin_a)
+
+            if anio_fin_a == "":
+                anio_fin = anio_inicio
+            else:
+                anio_fin = int(anio_fin_a)
+        except Exception:
+            print("Los datos ingresados no son validos!")
+            return
 
         fecha_inicio = datetime(anio_inicio, mes_inicio, 1)
         fecha_fin = datetime(anio_fin, mes_fin, 28)
@@ -248,26 +304,35 @@ def informePrecios():
                 nuevo_anio += 1
             fecha_actual = datetime(nuevo_anio, nuevo_mes, 1)
 
-            # Crear estructura base
+        # Crear estructura base
         resumen = {}
         for id_h, datos_h in herramientas.items():
-            resumen[datos_h["nombre"]] = {mes: 0 for mes in meses_mostrar}
+            resumen[datos_h["nombre"]] = {}
+            for mes in meses_mostrar:
+                resumen[datos_h["nombre"]][mes] = 0
 
         # Recorrer alquileres dentro del rango
-        for datos in alquileres.values():
-            id_h = datos["id_herramienta"]
-            fecha_str = datos["fecha_inicio"]
+        for id_a in alquileres:
+            datos = alquileres[id_a]
 
-            fecha = datetime.strptime(fecha_str, "%Y.%m.%d %H:%M:%S")
-            if fecha < fecha_inicio or fecha > fecha_fin:
-                continue
+            # fecha
+            try:
+                fecha = datetime.strptime(datos["fecha_inicio"], "%Y.%m.%d %H:%M:%S")
+            except Exception:
+                print(f"Fecha inválida en el registro {id_a}.")
+                fecha = None
 
-            monto = datos["total"]
-            etiqueta_mes = f"{meses_abrev[fecha.month - 1]}.{str(fecha.year)[2:]}"
-            nombre_h = herramientas[id_h]["nombre"]
+            if fecha is not None:
+                if fecha >= fecha_inicio:
+                    if fecha <= fecha_fin:
+                        id_h = datos["id_herramienta"]
 
-            if etiqueta_mes in resumen[nombre_h]:
-                resumen[nombre_h][etiqueta_mes] += monto
+                        if id_h in herramientas:
+                            etiqueta_mes = f"{meses_abrev[fecha.month - 1]}.{str(fecha.year)[2:]}"
+                            nombre = herramientas[id_h]["nombre"]
+
+                            if etiqueta_mes in resumen[nombre]:
+                                resumen[nombre][etiqueta_mes] += datos["total"]
 
         print("-" * 150)
         print("CANTIDADES TOTALES POR MES (PESOS)")
@@ -291,7 +356,7 @@ def informePrecios():
     except(TypeError) as detalle:
         print("No se encontraron registros: ", detalle)
 
-def informeHerramientasInactivas(herramientas, alquileres):
+def informeHerramientasInactivas():
     """
     Generar un informe de las herramientas menos utilizadas durante el mes actual
 
@@ -325,11 +390,13 @@ def informeHerramientasInactivas(herramientas, alquileres):
 
         # Contar alquileres del mes actual
         for datos in alquileres.values():
-            fecha = datetime.strptime(datos["fecha_inicio"], "%Y-%m-%d")
+            fecha = datetime.strptime(datos["fecha_inicio"], "%Y.%m.%d %H:%M:%S")
             if fecha.year == anio_actual and fecha.month == mes_actual:
                 idHerramientas = datos["id_herramienta"]
-                resumen[idHerramientas]["cantidad"] = resumen[idHerramientas]["cantidad"] + 1
-                resumen[idHerramientas]["total"] = resumen[idHerramientas]["total"] + datos["total"]
+
+                if idHerramientas in resumen:
+                    resumen[idHerramientas]["cantidad"] = resumen[idHerramientas]["cantidad"] + 1
+                    resumen[idHerramientas]["total"] = resumen[idHerramientas]["total"] + datos["total"]
 
         # Convertir a lista para ordenar manualmente
         lista_resumen = []
@@ -364,8 +431,8 @@ def informeHerramientasInactivas(herramientas, alquileres):
         print("-" * 120)
         print("Las herramientas inactivas son aquellas sin registros en el mes actual.")
         print("-" * 120)
-    except(TypeError) as detalle:
-        print("No se encontraron registros: ", detalle)
+    except(TypeError, ValueError) as detalle:
+        print("No se pudieron procesar los registros: ", detalle)
 
 #----------------------------------------------------------------------------------------------
 # CUERPO PRINCIPAL
