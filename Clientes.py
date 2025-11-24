@@ -14,10 +14,18 @@ Pendientes:
 # MÓDULOS
 #----------------------------------------------------------------------------------------------
 from Archivos import *
+import re
 
 #----------------------------------------------------------------------------------------------
 # FUNCIONES Clientes
 #----------------------------------------------------------------------------------------------
+def validarEmail(email):
+    patron = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+    if re.match(patron, email):
+        return True
+    else:
+        return False
+
 def registrarCliente():
     """
     Registra un nuevo cliente solicitando datos personales y permitiendole ingresar 1 o mas telefonos.
@@ -42,6 +50,10 @@ def registrarCliente():
         nombre = str(input("Ingrese el nombre del cliente: ")).strip()
         domicilio = str(input("Ingrese el domicilio del cliente: ")).strip()
         email = str(input("Ingrese un email valido: ")).strip()
+
+        while validarEmail(email) == False:
+            print("Email invalido o vacio, intente nuevamente: ")
+            email = str(input("Ingrese un email valido: ")).strip()
 
         # Cargar uno o más teléfonos
         telefonos = {}
@@ -106,11 +118,18 @@ def modificarCliente():
     print("Deje en blanco para mantener el valor actual.")
     nuevo_nombre = input(f"Nuevo nombre ({clientes[id_cliente]['nombre']}): ").strip()
     nuevo_domicilio = input(f"Nuevo domicilio ({clientes[id_cliente]['domicilio']}): ").strip()
+    nuevo_email = input("Ingrese el nuevo email: ").strip()
+
+    while not validarEmail(nuevo_email):
+        print("Email invalido, intente nuevamente.")
+        nuevo_email = input("Ingrese el nuevo email: ").strip()
 
     if nuevo_nombre != "":
         clientes[id_cliente]['nombre'] = nuevo_nombre
     if nuevo_domicilio != "":
         clientes[id_cliente]['domicilio'] = nuevo_domicilio
+    if nuevo_email != "":
+        clientes[id_cliente]["email"] = nuevo_email
 
     guardarArchivoJSON("./JSON/clientes.json", clientes)
 
