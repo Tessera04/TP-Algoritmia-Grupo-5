@@ -108,15 +108,9 @@
         }
     },
     "10": {
-        "activa": true,
-        "nombre": "Atornillador inalámbrico Bosch",
-        "costo_diario": 3600.0,
-        "stock": 4,
-        "especificaciones": {
-            "potencia": "12 V",
-            "voltaje": "Batería",
-            "peso": "0.9 kg",
-            "velocidad": "1300 RPM"
-        }
+        "nombre": "Matias",
+        "costo_diario": 4444.0,
+        "stock": 44,
+        "activa": false
     }
 }

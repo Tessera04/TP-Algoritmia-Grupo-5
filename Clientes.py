@@ -20,6 +20,14 @@ import re
 # FUNCIONES Clientes
 #----------------------------------------------------------------------------------------------
 def validarEmail(email):
+    """
+    Valida que el email cumpla el patron especificado.
+
+    Parametros:
+        email (str)
+    Returns:
+        Bool (True o False)
+    """
     patron = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
     if re.match(patron, email):
         return True
@@ -30,11 +38,10 @@ def registrarCliente():
     """
     Registra un nuevo cliente solicitando datos personales y permitiendole ingresar 1 o mas telefonos.
 
-    Parametros:
-
-
+    Archivos:
+        clientes.json
     Returns:
-    dict: El diccionario 'clientes' actualizado con la nueva entrada.
+        dict: El diccionario 'clientes' actualizado con la nueva entrada.
     """
     try:
         clientes = cargarArchivoJSON("./JSON/clientes.json")
@@ -93,8 +100,8 @@ def modificarCliente():
     Permite actualizar los datos básicos (nombre y domicilio) de un cliente existente.
     Solicita el ID del cliente y permite ingresar nuevos valores. Si el usuario deja un campo en blanco, se conserva el valor actual.
     
-    Parametros:
-
+    Archivos:
+        clientes.json
     Returns:
         dict: El diccionario de clientes con los datos actualizados
 
@@ -141,8 +148,8 @@ def eliminarCliente():
     Realiza una baja lógica de un cliente cambiando su estado a inactivo.
     Solicita el ID del cliente y, si existe en el registro, cambia el valor de la clave 'activo' a False.
 
-    Parametros:
-        clientes (dict)
+    Archivos:
+        clientes.json
 
     Returns:
         dict: El diccionario actualizado tras la baja lógica.
@@ -173,10 +180,13 @@ def eliminarCliente():
 
 def listarClientes():
     """
-    Enlista los clientes activos con sus respectivos datos
+    Enlista los clientes activos con sus respectivos datos.
+
+    Archivos:
+        clientes.json
 
     Returns:
-        dict: Devuelve el diccionario de clientes
+
     """
 
     try:

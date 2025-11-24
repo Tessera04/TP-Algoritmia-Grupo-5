@@ -83,7 +83,7 @@ def modificarHerramienta():
         print("No hay herramientas registradas.")
         return herramientas
     
-    listarHerramientas(herramientas)
+    listarHerramientas()
 
     id_herramienta = input("Ingrese el ID de la herramienta a modificar: ").strip()
 
@@ -127,7 +127,7 @@ def eliminarHerramienta():
         print("No hay herramientas registradas.")
         return herramientas
 
-    listarHerramientas(herramientas)
+    listarHerramientas()
 
     id_herramienta = input("Ingrese el ID de la herramienta a eliminar: ").strip()
 
