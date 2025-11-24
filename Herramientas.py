@@ -14,6 +14,7 @@ Pendientes:
 # MÓDULOS
 #----------------------------------------------------------------------------------------------
 from Archivos import *
+from Validaciones import *
 
 #----------------------------------------------------------------------------------------------
 # FUNCIONES Herramientas
@@ -26,41 +27,65 @@ def registrarHerramienta():
     en las claves existentes del diccionario. Luego, solicita al usuario
     ingresar el nombre, costo diario y stock de la herramienta.
 
-    Parametros:
-        herramientas (dict)
-
-    Returns:
-        dict: El diccionario 'herramientas' actualizado con el nuevo registro
-    
-    
+    Archivos:
+        herramientas.json (dict)
     """
+    try:
+        herramientas = cargarArchivoJSON("./JSON/herramientas.json")
 
-    herramientas = cargarArchivoJSON("./JSON/herramientas.json")
+        print("=== Registrar nueva herramienta ===")
+        #Logica para registrar una nueva herramienta
+        if len(herramientas) == 0:
+            nuevo_id = "1"
+        else:
+            nuevo_id = str(int(max(herramientas.keys())) + 1)
 
-    print("=== Registrar nueva herramienta ===")
-    #Logica para registrar una nueva herramienta
-    if len(herramientas) == 0:
-        nuevo_id = "1"
-    else:
-        nuevo_id = str(int(max(herramientas.keys())) + 1)
+        #Solicitar datos
+        #Solicitar Nombre
+        nombre = validarTexto("Ingrese el nombre de la herramienta: ", "El nombre de la herramienta no puede estar vacio.")
+        
+        #Solicitar costo_diario
+        costo_diario = float(validarNegativos("Ingrese el costo diario de alquiler ($): ", "El valor del costo diario no puede ser 0 o menos."))
 
-    #Solicitar datos
-    nombre = input("Ingrese el nombre de la herramienta: ").strip()
-    costo_diario = float(input("Ingrese el costo diario de alquiler ($): "))
-    stock = int(input("Ingrese el stock disponible: "))
+        #Solicitar stock
+        stock = validarNegativos("Ingrese el stock disponible: ", "El stock disponible no puede ser 0 o menos.")
 
-    #Agregar al diccionario
-    herramientas[nuevo_id] = {
-        "nombre": nombre,
-        "costo_diario": costo_diario,
-        "stock": stock,
-        "activa": True
-    }
+        #Solicitar potencia
+        potencia = validarTextoNA("Ingrese la potencia de la herramienta: ", "El valor no puede estar vacio, queda como N/A")
 
-    guardarArchivoJSON("./JSON/herramientas.json", herramientas)
+        #Solicitar voltaje
+        voltaje = validarTextoNA("Ingrese el voltaje de la herramienta: ", "El valor no puede estar vacio, queda como N/A")
 
-    print("Herramienta registrada con éxito.")
-    return herramientas
+        #Solicitar peso
+        peso = validarTextoNA("Ingrese el peso de la herramienta: ", "El valor no puede estar vacio, queda como N/A")
+
+        #Solicitar velocidad
+        velocidad = validarTextoNA("Ingrese la velocidad de la herramienta: ", "El valor no puede estar vacio, queda como N/A")
+
+        #Validaciones
+
+
+        #Agregar al diccionario
+        herramientas[nuevo_id] = {
+            "activa": True,
+            "nombre": nombre,
+            "costo_diario": costo_diario,
+            "stock": stock,
+            "especificaciones": {
+                "potencia": potencia,
+                "voltaje": voltaje,
+                "peso": peso,
+                "velocidad": velocidad
+            }
+        }
+
+        guardarArchivoJSON("./JSON/herramientas.json", herramientas)
+
+        print("Herramienta registrada con éxito.")
+    except(TypeError) as detalle:
+        print("No se encontraron registros: ", detalle)
+    except Exception as e:
+        print("ERROR!: Error inesperado al guardar el archivo: ", e)
 
 def modificarHerramienta():
     """
@@ -68,90 +93,126 @@ def modificarHerramienta():
     Si el diccionario de herramientas esta vacio, la funcion termina anticipadamente.
     Pide el id de la herramienta a modificar y luego solicita datos como el nuevo nombre, nuevo costo, nuevo stock, permitiendo dejar en blanco para dejar el valor actual.
 
-    parametros:
-        herramientas (dic)
-    returns:
-        El diccionario actualizado con las modificaciones realizadas, o el mismo diccionario si no hubo cambios o el ID no era válido
+    Archivos:
+        herramientas.json (dict)
 
     """
+    try:
+        herramientas = cargarArchivoJSON("./JSON/herramientas.json")
 
-    herramientas = cargarArchivoJSON("./JSON/herramientas.json")
+        print("=== Modificar herramienta ===")
 
-    print("=== Modificar herramienta ===")
+        if len(herramientas) == 0:
+            print("No hay herramientas registradas.")
+            return herramientas
+        
+        listarHerramientas()
 
-    if len(herramientas) == 0:
-        print("No hay herramientas registradas.")
-        return herramientas
-    
-    listarHerramientas()
+        id_herramienta = input("Ingrese el ID de la herramienta a modificar: ").strip()
 
-    id_herramienta = input("Ingrese el ID de la herramienta a modificar: ").strip()
+        if id_herramienta not in herramientas:
+            print("ID de herramienta no encontrado.")
+            return herramientas
+        
+        h = herramientas[id_herramienta]
+        
+        print("\n Deje en blanco para mantener el valor actual. \n")
 
-    if id_herramienta not in herramientas:
-        print("ID de herramienta no encontrado.")
-        return herramientas
-    
-    print("Deje en blanco para mantener el valor actual.")
-    nueva_nombre = input(f"Nuevo nombre ({herramientas[id_herramienta]['nombre']}): ").strip()
-    nuevo_costo = input(f"Nuevo costo diario ({herramientas[id_herramienta]['costo_diario']}): ").strip()
-    nuevo_stock = input(f"Nuevo stock ({herramientas[id_herramienta]['stock']}): ").strip()
+        nueva_nombre = input(f"Nuevo nombre ({h['nombre']}): ").strip()
 
-    if nueva_nombre != "":
-        herramientas[id_herramienta]['nombre'] = nueva_nombre
-    if nuevo_costo != "":
-        herramientas[id_herramienta]['costo_diario'] = float(nuevo_costo)
-    if nuevo_stock != "":
-        herramientas[id_herramienta]['stock'] = int(nuevo_stock)
+        nuevo_costo = input(f"Nuevo costo diario ({h['costo_diario']}): ").strip()
+        if nuevo_costo != "":
+            try:
+                nuevo_costo = float(nuevo_costo)
+            except ValueError:
+                print("Costo invalido. No se modifico.")
+                nuevo_costo = ""
 
-    guardarArchivoJSON("./JSON/herramientas.json", herramientas)
-    
-    print("Herramienta modificada con éxito.")
-    return herramientas
+        nuevo_stock = input(f"Nuevo stock ({h['stock']}): ").strip()
+        if nuevo_stock != "":
+            try:
+                nuevo_stock = int(nuevo_stock)
+            except ValueError:
+                print("Stock invalido. No se modifico.")
+                nuevo_stock = ""
+        
+        espec = h['especificaciones']
+
+        nueva_potencia = input(f"Nuevo potencia ({espec['potencia']}): ").strip()
+        nuevo_voltaje = input(f"Nuevo voltaje ({espec['voltaje']}): ").strip()
+        nuevo_peso = input(f"Nuevo peso ({espec['peso']}): ").strip()
+        nuevo_velocidad = input(f"Nuevo velocidad ({espec['velocidad']}): ").strip()
+
+        if nueva_nombre != "":
+            h['nombre'] = nueva_nombre
+        if nuevo_costo != "":
+            h['costo_diario'] = float(nuevo_costo)
+        if nuevo_stock != "":
+            h['stock'] = int(nuevo_stock)
+        if nueva_potencia != "":
+            espec['potencia'] = str(nueva_potencia)        
+        if nuevo_voltaje != "":
+            espec['voltaje'] = str(nuevo_voltaje)
+        if nuevo_peso != "":
+            espec['peso'] = str(nuevo_peso)
+        if nuevo_velocidad != "":
+            espec['velocidad'] = str(nuevo_velocidad)
+
+        guardarArchivoJSON("./JSON/herramientas.json", herramientas)
+        
+        print("Herramienta modificada con éxito.")
+
+    except(TypeError) as detalle:
+        print("No se encontraron registros: ", detalle)
+    except Exception as e:
+        print("ERROR!: Error inesperado al guardar el archivo: ", e)
 
 def eliminarHerramienta():
     """
     Realiza una baja lógica de una herramienta cambiando su estado a inactivo
 
-    Parametros:
-        herramientas (dict)
+    Archivos:
+        herramientas.json (dict)
     
-    return:
-    El diccionario actualizado con el estado de la herramienta modificado.
     """
+    try:
+        herramientas = cargarArchivoJSON("./JSON/herramientas.json")
 
-    herramientas = cargarArchivoJSON("./JSON/herramientas.json")
+        print("=== Eliminar herramienta ===")
+        
+        if len(herramientas) == 0:
+            print("No hay herramientas registradas.")
+            return herramientas
 
-    print("=== Eliminar herramienta ===")
-    
-    if len(herramientas) == 0:
-        print("No hay herramientas registradas.")
-        return herramientas
+        listarHerramientas()
 
-    listarHerramientas()
+        id_herramienta = input("Ingrese el ID de la herramienta a eliminar: ").strip()
 
-    id_herramienta = input("Ingrese el ID de la herramienta a eliminar: ").strip()
+        if id_herramienta not in herramientas:
+            print("ID de herramienta no encontrado.")
+            return herramientas
+        
+        herramientas[id_herramienta]["activa"] = False
 
-    if id_herramienta not in herramientas:
-        print("ID de herramienta no encontrado.")
-        return herramientas
-    
-    herramientas[id_herramienta]["activa"] = False
+        guardarArchivoJSON("./JSON/herramientas.json", herramientas)
 
-    guardarArchivoJSON("./JSON/herramientas.json", herramientas)
+        print("Herramienta eliminada con éxito.")
 
-    print("Herramienta eliminada con éxito.")
-    return herramientas
+    except(TypeError) as detalle:
+        print("No se encontraron registros: ", detalle)
+    except Exception as e:
+        print("ERROR!: Error inesperado al guardar el archivo: ", e)
 
 
 def listarHerramientas():
     """
     Muestra un listado de todas las herramientas que se encuentran activas
 
-    Parametros:
-    herramientas (dict)
+    Archivos:
+        herramientas.json (dict)
 
     Returns:
-    None: Esta función solo imprime datos en pantalla y no retorna ningún valor.
+        None: Esta función solo imprime datos en pantalla y no retorna ningún valor.
     """
     try:
         herramientas = cargarArchivoJSON("./JSON/herramientas.json")
@@ -162,13 +223,12 @@ def listarHerramientas():
             print("No hay herramientas registradas.")
             return
         
-        print(f"{'ID':<5} {'Nombre':<50} {'Costo Diario ($)':<30} {'Stock':<20}")
-        print('-' * 120)
+        print(f"{'ID':<5} {'Nombre':<50} {'Costo Diario ($)':<30} {'Stock':<20} {'Potencia':<20} {'Voltaje':<20} {'Peso':<20} {'Velocidad':<20}")
+        print('-' * 200)
 
         for id_herramienta, datos in herramientas.items():
             if datos["activa"] == True:
-                print(f"{id_herramienta:<5} {datos['nombre']:<50} {datos['costo_diario']:<30} "
-                    f"{datos['stock']:<20}")
+                print(f"{id_herramienta:<5} {datos['nombre']:<50} {datos['costo_diario']:<30} {datos['stock']:<20} {datos['especificaciones']['potencia']:<20} {datos['especificaciones']['voltaje']:<20} {datos['especificaciones']['peso']:<20} {datos['especificaciones']['velocidad']:<20}")
         
         return
     

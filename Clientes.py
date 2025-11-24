@@ -14,34 +14,19 @@ Pendientes:
 # MÓDULOS
 #----------------------------------------------------------------------------------------------
 from Archivos import *
-import re
+from Validaciones import *
 
 #----------------------------------------------------------------------------------------------
 # FUNCIONES Clientes
 #----------------------------------------------------------------------------------------------
-def validarEmail(email):
-    """
-    Valida que el email cumpla el patron especificado.
 
-    Parametros:
-        email (str)
-    Returns:
-        Bool (True o False)
-    """
-    patron = r"^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
-    if re.match(patron, email):
-        return True
-    else:
-        return False
 
 def registrarCliente():
     """
     Registra un nuevo cliente solicitando datos personales y permitiendole ingresar 1 o mas telefonos.
 
     Archivos:
-        clientes.json
-    Returns:
-        dict: El diccionario 'clientes' actualizado con la nueva entrada.
+        ./JSON/Clientes.json
     """
     try:
         clientes = cargarArchivoJSON("./JSON/clientes.json")
@@ -54,12 +39,12 @@ def registrarCliente():
             nuevo_id = str(int(max(clientes.keys())) + 1)
 
         #Solicitar datos del cliente
-        nombre = str(input("Ingrese el nombre del cliente: ")).strip()
-        domicilio = str(input("Ingrese el domicilio del cliente: ")).strip()
-        email = str(input("Ingrese un email valido: ")).strip()
+        nombre = validarTexto("Ingrese el nombre del cliente : ", "El nombre del cliente no puede estar vacio.")
+        domicilio = validarTexto("Ingrese el domicilio del cliente : ", "El domicilio del cliente no puede estar vacio.")
+        email = validarTexto("Ingrese el email del cliente : ", "El email del cliente no puede estar vacio.")
 
         while validarEmail(email) == False:
-            print("Email invalido o vacio, intente nuevamente: ")
+            print("Email invalido, intente nuevamente: ")
             email = str(input("Ingrese un email valido: ")).strip()
 
         # Cargar uno o más teléfonos
@@ -90,10 +75,10 @@ def registrarCliente():
 
         #Mensaje de confirmacion al usuario
         print("Cliente registrado con éxito.")
-
-        return clientes
-    except(TypeError) as detalle:
-        print("No se encontraron registros: ", detalle)
+    except TypeError as detalle:
+        print("ERROR!: Error de tipo inesperado en los datos cargados.", detalle)
+    except Exception as e:
+        print("ERROR!: Error inesperado al guardar el archivo: ", e)
 
 def modificarCliente():
     """
@@ -101,47 +86,76 @@ def modificarCliente():
     Solicita el ID del cliente y permite ingresar nuevos valores. Si el usuario deja un campo en blanco, se conserva el valor actual.
     
     Archivos:
-        clientes.json
-    Returns:
-        dict: El diccionario de clientes con los datos actualizados
-
+        ./JSON/clientes.json
     """
-    clientes = cargarArchivoJSON("./JSON/clientes.json")
+    try:
+        clientes = cargarArchivoJSON("./JSON/clientes.json")
 
-    print("=== Modificar cliente ===")
+        print("=== Modificar cliente ===")
 
-    if len(clientes) == 0:
-        print("No hay clientes registrados.")
-        return clientes
+        if len(clientes) == 0:
+            print("No hay clientes registrados.")
+            return clientes
 
-    listarClientes()
+        listarClientes()
 
-    id_cliente = input("Ingrese el ID del cliente a modificar: ").strip()
+        id_cliente = input("Ingrese el ID del cliente a modificar: ").strip()
 
-    if id_cliente not in clientes:
-        print("ID de cliente no encontrado.")
-        return clientes
+        if id_cliente not in clientes:
+            print("ID de cliente no encontrado.")
+            return clientes
 
-    print("Deje en blanco para mantener el valor actual.")
-    nuevo_nombre = input(f"Nuevo nombre ({clientes[id_cliente]['nombre']}): ").strip()
-    nuevo_domicilio = input(f"Nuevo domicilio ({clientes[id_cliente]['domicilio']}): ").strip()
-    nuevo_email = input("Ingrese el nuevo email: ").strip()
+        cliente = clientes[id_cliente]
+        telefonos = cliente.get("telefonos", {})
 
-    while not validarEmail(nuevo_email):
-        print("Email invalido, intente nuevamente.")
-        nuevo_email = input("Ingrese el nuevo email: ").strip()
+        print("\n Deje en blanco para mantener el valor actual. \n")
 
-    if nuevo_nombre != "":
-        clientes[id_cliente]['nombre'] = nuevo_nombre
-    if nuevo_domicilio != "":
-        clientes[id_cliente]['domicilio'] = nuevo_domicilio
-    if nuevo_email != "":
-        clientes[id_cliente]["email"] = nuevo_email
+        nuevo_nombre = input(f"Nuevo nombre ({cliente['nombre']}): ").strip()
+        nuevo_domicilio = input(f"Nuevo domicilio ({cliente['domicilio']}): ").strip()
 
-    guardarArchivoJSON("./JSON/clientes.json", clientes)
+        nuevo_email = input(f"Ingrese el nuevo email ({cliente['email']}): ").strip()
+        while validarEmail(nuevo_email) == False:
+            print("Email invalido, intente nuevamente: ")
+            nuevo_email = str(input("Ingrese un email valido: ")).strip()
 
-    print("Cliente modificado con éxito.")
-    return clientes
+        print("\n --- Modificar Telefonos --- \n")
+
+        tel1actual = telefonos.get("telefono1", "")
+        telefono1 = input(f"Telefono 1 ({tel1actual}): ").strip()
+        if telefono1 != "":
+            while not validarTelefono(telefono1):
+                print("Telefono invalido. Formato esperado: 11-1234-5678 o similar.")
+                telefono1 = input("Telefono 1: ").strip()
+        
+        tel2actual = telefonos.get("telefono2", "")
+        telefono2 = input(f"Telefono 2 ({tel2actual}): ").strip()
+        if telefono2 != "":
+            while not validarTelefono(telefono2):
+                print("Telefono invalido. Formato esperado: 11-1234-5678 o similar.")
+                telefono2 = input("Telefono 2: ").strip()
+
+        if nuevo_nombre != "":
+            cliente['nombre'] = nuevo_nombre
+        if nuevo_domicilio != "":
+            cliente['domicilio'] = nuevo_domicilio
+        if nuevo_email != "":
+            cliente["email"] = nuevo_email
+
+        if telefono1 != "":
+            cliente["telefonos"]["telefono1"] = telefono1
+        if telefono2 != "":
+            cliente["telefonos"]["telefono2"] = telefono2
+
+        cliente["telefonos"] = telefonos
+
+        guardarArchivoJSON("./JSON/clientes.json", clientes)
+
+        print("Cliente modificado con éxito.")
+
+    except TypeError as detalle:
+        print("ERROR!: Error de tipo inesperado en los datos cargados.", detalle)
+    except Exception as e:
+        print("ERROR!: Error inesperado al guardar el archivo: ", e)
 
 def eliminarCliente():
     """
@@ -149,44 +163,39 @@ def eliminarCliente():
     Solicita el ID del cliente y, si existe en el registro, cambia el valor de la clave 'activo' a False.
 
     Archivos:
-        clientes.json
-
-    Returns:
-        dict: El diccionario actualizado tras la baja lógica.
+        ./JSON/clientes.json
     """
+    try:
+        clientes = cargarArchivoJSON("./JSON/clientes.json")
 
-    clientes = cargarArchivoJSON("./JSON/clientes.json")
+        print("=== Eliminar cliente ===")
 
-    print("=== Eliminar cliente ===")
+        if len(clientes) == 0:
+            print("No hay clientes registrados.")
+            return clientes
+        
+        listarClientes()
 
-    if len(clientes) == 0:
-        print("No hay clientes registrados.")
-        return clientes
-    
-    listarClientes()
+        id_cliente = str(int(input("Ingrese el ID del cliente a eliminar: ")))
 
-    id_cliente = str(int(input("Ingrese el ID del cliente a eliminar: ")))
+        if id_cliente not in clientes:
+            print("ID de cliente no encontrado.")
+            return clientes
+        
+        clientes[id_cliente]["activo"] = False
 
-    if id_cliente not in clientes:
-        print("ID de cliente no encontrado.")
-        return clientes
-    
-    clientes[id_cliente]["activo"] = False
+        guardarArchivoJSON("./JSON/clientes.json", clientes)
 
-    guardarArchivoJSON("./JSON/clientes.json", clientes)
-
-    print("Cliente eliminado con éxito.")
-    return clientes
+        print("Cliente eliminado con éxito.")
+    except Exception as e:
+        print("ERROR!: Error inesperado al guardar el archivo: ", e)
 
 def listarClientes():
     """
     Enlista los clientes activos con sus respectivos datos.
 
     Archivos:
-        clientes.json
-
-    Returns:
-
+        ./JSON/clientes.json
     """
 
     try:
@@ -198,17 +207,22 @@ def listarClientes():
             print("No hay clientes registrados.")
             return
         
-        print(f"{'ID':<5} {'Nombre':<30} {'Domicilio':<30} {'Telefono':<15}")
-        print('*' * 100)
+        print(f"{'ID':<15} {'Nombre':<30} {'Domicilio':<30} {'Telefonos':<45} {'Email':<15}")
+        print('*' * 135)
 
         for id_cliente, datos in clientes.items():
             if datos["activo"] == True:
-                print(f"{id_cliente:<5} {datos['nombre']:<30} {datos['domicilio']:<30} {datos['telefonos']['telefono1']:<15}")
+                diccionarioTelefonos = datos.get('telefonos', {})
+                stringTelefonos = " / ".join(diccionarioTelefonos.values())
+
+                print(f"{id_cliente:<15} {datos['nombre']:<30} {datos['domicilio']:<30} {stringTelefonos:<45} {datos['email']:<30}")
 
         return
     
     except(TypeError) as detalle:
         print("No se encontraron registros: ", detalle)
+    except Exception as e:
+        print("ERROR!: Error inesperado al guardar el archivo: ", e)
 
 
 #----------------------------------------------------------------------------------------------

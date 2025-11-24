@@ -86,13 +86,13 @@
     "8": {
         "activa": true,
         "nombre": "Compresor de aire",
-        "costo_diario": 7500.0,
-        "stock": 1,
+        "costo_diario": 8000.0,
+        "stock": 8,
         "especificaciones": {
-            "potencia": "2.0 HP",
+            "potencia": "3.0 HP",
             "voltaje": "220 V",
-            "peso": "25 kg",
-            "velocidad": "2850 RPM"
+            "peso": "30 Kg",
+            "velocidad": "2900 RPM"
         }
     },
     "9": {

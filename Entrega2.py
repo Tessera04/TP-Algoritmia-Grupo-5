@@ -602,10 +602,10 @@ def main():
                     informeVentasYRecaudacionMensual()
 
                 elif opcionSubmenu == "2":   # Opción 2 del submenú informes
-                    informeVentasPorProductoCantidades()
+                    informeCantidades()
 
                 elif opcionSubmenu == "3":   # Opción 3 del submenú  informes
-                    informeVentasPorProductoPrecios()
+                    informePrecios()
 
                 elif opcionSubmenu == "4":   # Opción 4 del submenú informes
                     informeHerramientasInactivas()
